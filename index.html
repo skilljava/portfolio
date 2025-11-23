@@ -17,7 +17,7 @@
   --green:#21d07a;
   --grid-white: rgba(255,255,255,0.16);
   --grid-white-2: rgba(255,255,255,0.08);
-  --max-width: 1100px;
+  --max-width: 1200px;
 }
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{height:100%}
@@ -32,30 +32,23 @@ body{
   scroll-behavior:smooth;
 }
 
-/* ====== Layout Helpers ====== */
+/* container helpers */
 .container{
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 40px 20px;
 }
-.full-viewport{
-  min-height: 100vh;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
 
-/* ====== HEADER ====== */
+/* header */
 .header{
   position:relative;
   width:100%;
   height:100vh;
   overflow:hidden;
-  display:block;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
-  transition: opacity 0.9s cubic-bezier(.2,.9,.2,1), transform 0.9s cubic-bezier(.2,.9,.2,1);
 }
 .header::before{
   content:"";
@@ -74,37 +67,44 @@ body{
   z-index:1;
   pointer-events:none;
 }
+
+/* grid canvas wrapper sits behind content */
 .canvas-wrap{
   position:absolute;
   inset:0;
   z-index:2;
   pointer-events:none;
 }
+
+/* particle wrapper (if used) */
 .particle-wrap{
   position:absolute;
   inset:0;
   z-index:3;
   pointer-events:none;
 }
-.header-inner{
+
+/* central layout: profile card centered, menu row to right */
+.h-center {
   position:relative;
   z-index:10;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  height:100%;
   display:flex;
   align-items:center;
-  padding: 48px 28px;
+  justify-content:center;
+  gap:48px;
+  width:100%;
+  max-width:1100px;
+  padding: 0 20px;
 }
-.header-left{
-  width: 420px;
-  min-width: 320px;
-  margin-right: 40px;
+
+/* profile card - centered */
+.profile-wrap{
+  min-width:380px;
+  max-width:420px;
   display:flex;
   flex-direction:column;
-  gap:18px;
-  transform: translate3d(-20px,0,0);
-  transition: transform 0.9s cubic-bezier(.2,.9,.2,1), opacity 0.9s cubic-bezier(.2,.9,.2,1);
+  align-items:flex-start;
+  transform: translateY(0);
 }
 .profile-glass{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -112,7 +112,7 @@ body{
   border: 1px solid var(--glass-border);
   padding:20px;
   backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: 0 6px 30px rgba(255,10,10,0.06);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
   display:flex;
   gap:16px;
   align-items:center;
@@ -163,46 +163,95 @@ body{
 }
 .header-desc{
   margin-top:18px;
-  color: rgba(255,255,255,0.84);
+  color: rgba(255,255,255,0.86);
   font-size:0.98rem;
   background:transparent;
-  line-height:1.5;
+  line-height:1.45;
+  max-width:420px;
 }
-.header-right{
-  flex:1;
+
+/* menu squares row (beside profile) */
+.menu-row{
   display:flex;
   align-items:center;
-  justify-content:flex-end;
-  padding-right:30px;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:nowrap;
 }
-.header-deco{
-  width:360px;
-  height:240px;
+
+/* each square */
+.menu-item{
+  --base-w:140px;
+  --base-h:140px;
+  width:var(--base-w);
+  height:var(--base-h);
   border-radius:14px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
   border:1px solid rgba(255,255,255,0.03);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
   display:flex;
   align-items:center;
   justify-content:center;
-  color:rgba(255,255,255,0.06);
-  font-size:2.2rem;
-  transform: translateY(6px);
+  color:rgba(255,255,255,0.9);
+  font-weight:700;
+  cursor:pointer;
+  user-select:none;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 300ms ease, box-shadow 300ms ease;
+  transform-origin: center;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:12px;
 }
-@media (max-width:1000px){
-  .header-left{ width:360px; min-width:260px; }
-  .header-deco{ display:none; }
-}
-@media (max-width:800px){
-  .header-inner{ flex-direction:column; align-items:flex-start; gap:20px; padding:24px; }
-  .header-right{ display:none; }
-  .header-left{ width:100%; margin-right:0; }
-  .profile-glass{ width:100%; align-items:center; }
-}
-.header--faded{
-  opacity:0;
-  transform: translateY(-22px);
+
+/* subtle inner glow/red accent */
+.menu-item::before{
+  content:"";
+  position:absolute;
+  inset:0;
   pointer-events:none;
+  box-shadow: inset 0 0 28px rgba(255,20,20,0.04);
+  opacity:0.9;
+}
+
+/* default small scale for non-active when an active exists */
+.menu-row.has-active .menu-item { transform: scale(0.86); opacity:0.72; }
+.menu-row .menu-item.active { transform: scale(1.12); opacity:1; box-shadow: 0 28px 80px rgba(255,10,10,0.06); z-index:12; }
+
+/* focus styles for keyboard */
+.menu-item:focus { outline: 2px solid rgba(255,75,75,0.14); outline-offset: 2px; }
+
+/* label inside */
+.menu-item .label {
+  z-index:2;
+  font-size:0.95rem;
+  pointer-events:none;
+}
+
+/* small animation when entering */
+.menu-item { transform: translateY(6px) scale(0.98); opacity:0.96; }
+
+/* responsive */
+@media (max-width:980px){
+  .h-center{ flex-direction:column-reverse; gap:28px; padding: 20px; }
+  .menu-row{ order:2; }
+  .profile-wrap{ order:1; align-items:center; text-align:center; }
+  .header-desc{ max-width:320px; }
+}
+
+/* footer (kept minimal) */
+.footer{
+  width:100%;
+  padding:26px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:rgba(255,255,255,0.6);
+  font-size:0.95rem;
+  border-top: 1px solid rgba(255,255,255,0.02);
+  background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03));
+  z-index:5;
 }
 </style>
 </head>
@@ -218,8 +267,9 @@ body{
     <canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas>
   </div>
 
-  <div class="header-inner container">
-    <div class="header-left transform-gpu" id="headerLeft">
+  <div class="h-center container" role="main" aria-live="polite">
+    <!-- profile centered -->
+    <div class="profile-wrap" id="profileWrap">
       <div class="profile-glass" role="region" aria-label="profile">
         <div class="avatar" aria-hidden="true">
           <img src="https://cdn.discordapp.com/avatars/1275540868186636348/7383706214a2a719edf30d967c567f9d.png?size=1024" alt="skilljava avatar">
@@ -234,12 +284,15 @@ body{
       <div class="header-desc" id="headerDesc">
         I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.
       </div>
-
     </div>
 
-    <div class="header-right">
-      <div class="header-deco" aria-hidden="true"></div>
-    </div>
+    <!-- menu squares row -->
+    <nav class="menu-row" aria-label="Quick links" id="menuRow">
+      <div class="menu-item" data-key="projects" tabindex="0"><div class="label">Projects</div></div>
+      <div class="menu-item" data-key="links" tabindex="0"><div class="label">Links</div></div>
+      <div class="menu-item" data-key="about" tabindex="0"><div class="label">About Me</div></div>
+      <div class="menu-item" data-key="contact" tabindex="0"><div class="label">Contact</div></div>
+    </nav>
   </div>
 </header>
 
@@ -252,48 +305,124 @@ body{
 
 <script>
 /* ====== ANIMATED GRID CANVAS ====== */
-
 const gridCanvas = document.getElementById("gridCanvas");
 const gc = gridCanvas.getContext("2d");
-
 function resizeGrid() {
-  gridCanvas.width = window.innerWidth;
-  gridCanvas.height = window.innerHeight;
+  gridCanvas.width = window.innerWidth * devicePixelRatio;
+  gridCanvas.height = window.innerHeight * devicePixelRatio;
+  gridCanvas.style.width = window.innerWidth + "px";
+  gridCanvas.style.height = window.innerHeight + "px";
+  gc.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
 }
 resizeGrid();
 window.addEventListener("resize", resizeGrid);
 
 let offset = 0;
-
 function drawGrid() {
-  gc.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+  gc.clearRect(0, 0, gridCanvas.width/devicePixelRatio, gridCanvas.height/devicePixelRatio);
 
-  gc.strokeStyle = "rgba(255,255,255,0.08)";
+  // soft red glow
+  const W = gridCanvas.width/devicePixelRatio, H = gridCanvas.height/devicePixelRatio;
+  const g = gc.createLinearGradient(0, H*0.15, 0, H);
+  g.addColorStop(0, 'rgba(255,20,20,0.09)');
+  g.addColorStop(0.6, 'rgba(255,20,20,0.02)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  gc.fillStyle = g;
+  gc.fillRect(0,0,W,H);
+
   gc.lineWidth = 1;
+  gc.strokeStyle = "rgba(255,255,255,0.06)";
+  gc.shadowColor = "rgba(255,20,20,0.06)";
+  gc.shadowBlur = 4;
 
   const size = 40;
-  offset += 0.15; // سرعت حرکت
+  offset += 0.18; // speed
 
-  for (let x = -offset; x < gridCanvas.width; x += size) {
+  for (let x = -offset; x < W + size; x += size) {
     gc.beginPath();
-    gc.moveTo(x, 0);
-    gc.lineTo(x, gridCanvas.height);
+    gc.moveTo((x % size), 0);
+    gc.lineTo((x % size), H);
     gc.stroke();
   }
-
-  for (let y = -offset; y < gridCanvas.height; y += size) {
+  gc.strokeStyle = "rgba(255,255,255,0.04)";
+  for (let y = -offset; y < H + size; y += size) {
     gc.beginPath();
-    gc.moveTo(0, y);
-    gc.lineTo(gridCanvas.width, y);
+    gc.moveTo(0, (y % size));
+    gc.lineTo(W, (y % size));
     gc.stroke();
   }
-
   requestAnimationFrame(drawGrid);
 }
-
 drawGrid();
 
-/* ====== OPTIONAL: Particle Canvas اگر خواستی فعالش کنم بگو ====== */
+/* ====== Menu hover/focus interactions ====== */
+const menuRow = document.getElementById('menuRow');
+const items = Array.from(menuRow.querySelectorAll('.menu-item'));
+
+function clearActive() {
+  items.forEach(it => it.classList.remove('active'));
+  menuRow.classList.remove('has-active');
+}
+function setActive(target) {
+  items.forEach(it => it.classList.remove('active'));
+  target.classList.add('active');
+  menuRow.classList.add('has-active');
+}
+
+// mouse interactions
+items.forEach(it => {
+  it.addEventListener('mouseenter', (e) => {
+    setActive(it);
+  });
+  it.addEventListener('mouseleave', (e) => {
+    // when mouse leaves the whole row, clear; otherwise keep last hovered
+    // small timeout to allow quick hover between items
+    setTimeout(() => {
+      const rect = menuRow.getBoundingClientRect();
+      const x = e.clientX, y = e.clientY;
+      if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+        clearActive();
+      }
+    }, 60);
+  });
+
+  // keyboard accessibility
+  it.addEventListener('focus', () => setActive(it));
+  it.addEventListener('blur', () => setTimeout(() => {
+    // if no item focused, clear
+    if (!document.activeElement || !menuRow.contains(document.activeElement)) clearActive();
+  }, 40));
+
+  // optional: click handler (for now just a tiny pulse)
+  it.addEventListener('click', () => {
+    // simple visual feedback - pulse
+    it.animate([
+      { transform: getComputedStyle(it).transform },
+      { transform: getComputedStyle(it).transform + ' scale(0.98)' },
+      { transform: getComputedStyle(it).transform }
+    ], { duration: 240, easing: 'ease-out' });
+    // You can wire navigation/scroll here based on data-key
+    const key = it.getAttribute('data-key');
+    console.log('menu clicked:', key);
+  });
+});
+
+/* reduce motion support */
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (prefersReduced.matches) {
+  offset = 0;
+}
+
+/* optional particle canvas (kept but disabled - enable if wanted) */
+(function(){
+  const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  // hide by default for perf - but keep structure if you want particles
+  canvas.style.display = 'none';
+})();
+
+/* helpful: center profile on small screens by adjusting order (handled by CSS above) */
 </script>
 
 </body>
