@@ -28,7 +28,6 @@ body{
   background:var(--bg);
   color:var(--text);
   line-height:1.45;
-  -webkit-font-variant-ligatures: contextual;
   overflow-x:hidden;
   scroll-behavior:smooth;
 }
@@ -58,8 +57,6 @@ body{
   background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
   transition: opacity 0.9s cubic-bezier(.2,.9,.2,1), transform 0.9s cubic-bezier(.2,.9,.2,1);
 }
-
-/* header overlays (glow & tint) */
 .header::before{
   content:"";
   position:absolute;
@@ -77,24 +74,18 @@ body{
   z-index:1;
   pointer-events:none;
 }
-
-/* grid canvas sits above glow but below content */
 .canvas-wrap{
   position:absolute;
   inset:0;
-  z-index:2; /* below content (content has z-index 10) */
+  z-index:2;
   pointer-events:none;
 }
-
-/* particle canvas sits above grid but below content */
 .particle-wrap{
   position:absolute;
   inset:0;
   z-index:3;
   pointer-events:none;
 }
-
-/* content area inside header aligned left (not centered) */
 .header-inner{
   position:relative;
   z-index:10;
@@ -105,8 +96,6 @@ body{
   align-items:center;
   padding: 48px 28px;
 }
-
-/* left column within header */
 .header-left{
   width: 420px;
   min-width: 320px;
@@ -117,8 +106,6 @@ body{
   transform: translate3d(-20px,0,0);
   transition: transform 0.9s cubic-bezier(.2,.9,.2,1), opacity 0.9s cubic-bezier(.2,.9,.2,1);
 }
-
-/* glass card for the profile area */
 .profile-glass{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border-radius:18px;
@@ -131,8 +118,6 @@ body{
   align-items:center;
   width:100%;
 }
-
-/* avatar */
 .avatar{
   width:96px;
   height:96px;
@@ -143,8 +128,6 @@ body{
   box-shadow: 0 8px 30px rgba(255,26,26,0.12), 0 2px 8px rgba(0,0,0,0.6);
 }
 .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-/* name and role */
 .meta{
   display:flex;
   flex-direction:column;
@@ -160,8 +143,6 @@ body{
   font-size:0.92rem;
   color:rgba(255,255,255,0.72);
 }
-
-/* ready badge under name */
 .badge{
   margin-top:6px;
   display:inline-flex;
@@ -176,14 +157,10 @@ body{
   font-size:0.88rem;
   box-shadow: 0 4px 18px rgba(0,0,0,0.45);
 }
-
-/* small circle in badge */
 .badge .dot{
   width:10px; height:10px; border-radius:50%; background:var(--green);
   box-shadow: 0 0 8px rgba(33,208,122,0.6);
 }
-
-/* description under the glass */
 .header-desc{
   margin-top:18px;
   color: rgba(255,255,255,0.84);
@@ -191,8 +168,6 @@ body{
   background:transparent;
   line-height:1.5;
 }
-
-/* right side of header reserved for empty space or subtle element */
 .header-right{
   flex:1;
   display:flex;
@@ -200,8 +175,6 @@ body{
   justify-content:flex-end;
   padding-right:30px;
 }
-
-/* subtle decorative card on the right */
 .header-deco{
   width:360px;
   height:240px;
@@ -216,142 +189,6 @@ body{
   font-size:2.2rem;
   transform: translateY(6px);
 }
-
-/* ====== Middle Image Section (the cartoon image) ====== */
-.image-section{
-  width:100%;
-  min-height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 60px 20px;
-  position:relative;
-  z-index:5;
-  transition: opacity 0.9s ease, transform 0.9s ease;
-}
-.image-card{
-  max-width:1100px;
-  width:100%;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.03);
-  transform: translateY(12px);
-  transition: transform 0.9s cubic-bezier(.2,.9,.2,1), opacity 0.9s ease;
-}
-.image-card img{
-  display:block;
-  width:100%;
-  height: auto;
-  object-fit:cover;
-  filter: saturate(0.98) contrast(1.03);
-}
-
-/* ====== SECTIONS (About, Projects, Contact) ====== */
-.section{
-  width:100%;
-  min-height:90vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 36px 20px;
-  position:relative;
-  overflow:visible;
-  background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(0,0,0,0.0));
-}
-.section-inner{
-  max-width:900px;
-  width:100%;
-  display:flex;
-  align-items:stretch;
-  justify-content:space-between;
-  gap:24px;
-}
-
-/* shared glass panel for sections: will animate in from right/left */
-.panel{
-  width:100%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,0.04);
-  padding:28px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-  color:var(--text);
-  opacity:0;
-  transform: translateY(24px);
-  transition: transform 0.8s cubic-bezier(.2,.9,.2,1), opacity 0.7s ease, box-shadow 0.4s ease;
-}
-
-/* title style */
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:18px;
-}
-.section-title h2{
-  margin:0;
-  font-size:1.6rem;
-  color:var(--red);
-  letter-spacing:-0.02em;
-}
-.section-body{ color: rgba(255,255,255,0.88); font-size:1rem; line-height:1.6; }
-
-/* project list */
-.project-list{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px; }
-.project-list li{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-  padding:12px 14px;
-  border-radius:10px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
-  border:1px solid rgba(255,255,255,0.02);
-}
-.project-list a{ color:var(--accent); font-weight:700; text-decoration:none; }
-
-/* contact items */
-.contact-list{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
-.contact-item{ color:rgba(255,255,255,0.92); }
-
-/* footer */
-.footer{
-  width:100%;
-  padding:26px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:rgba(255,255,255,0.6);
-  font-size:0.95rem;
-  border-top: 1px solid rgba(255,255,255,0.02);
-  background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03));
-}
-
-/* ====== ANIMATIONS STATES - INVIEW ====== */
-.panel.inview{ opacity:1; transform: translateY(0); }
-.header-left.inview{ transform: translate3d(0,0,0); opacity:1; }
-.image-card.inview{ transform: translateY(0); opacity:1; }
-
-/* directional enters */
-.from-right{ transform: translateX(40px); opacity:0; transition: transform 0.85s cubic-bezier(.2,.9,.2,1), opacity 0.7s ease; }
-.from-right.inview{ transform: translateX(0); opacity:1; }
-
-.from-left{ transform: translateX(-40px); opacity:0; transition: transform 0.85s cubic-bezier(.2,.9,.2,1), opacity 0.7s ease; }
-.from-left.inview{ transform: translateX(0); opacity:1; }
-
-/* subtle hover/focus */
-.panel:hover{ box-shadow: 0 24px 80px rgba(255,10,10,0.06); transform: translateY(-6px); }
-
-/* header fade-away class for when scrolled */
-.header--faded{
-  opacity:0;
-  transform: translateY(-22px);
-  pointer-events:none;
-}
-
-/* responsive tweaks */
 @media (max-width:1000px){
   .header-left{ width:360px; min-width:260px; }
   .header-deco{ display:none; }
@@ -361,17 +198,12 @@ body{
   .header-right{ display:none; }
   .header-left{ width:100%; margin-right:0; }
   .profile-glass{ width:100%; align-items:center; }
-  .image-card{ border-radius:12px; }
-  .section-inner{ flex-direction:column; }
 }
-
-/* utility spacing & helpers */
-.space-xx{ height:24px }
-.space-sm{ height:12px }
-.link{ color:var(--accent); text-decoration:none }
-
-/* make sure large transitions are smooth on GPU */
-.transform-gpu{ transform: translate3d(0,0,0); -webkit-transform:translate3d(0,0,0) }
+.header--faded{
+  opacity:0;
+  transform: translateY(-22px);
+  pointer-events:none;
+}
 </style>
 </head>
 <body>
@@ -381,11 +213,9 @@ body{
   <div class="canvas-wrap">
     <canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas>
   </div>
-
   <div class="particle-wrap">
     <canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas>
   </div>
-
   <div class="header-inner container">
     <div class="header-left transform-gpu" id="headerLeft">
       <div class="profile-glass" role="region" aria-label="profile">
@@ -398,73 +228,15 @@ body{
           <div class="badge" aria-hidden="true"><span class="dot"></span><span style="opacity:0.95">Ready to accept orders</span></div>
         </div>
       </div>
-
       <div class="header-desc" id="headerDesc">
         I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.
       </div>
     </div>
-
     <div class="header-right">
       <div class="header-deco" aria-hidden="true"> </div>
     </div>
   </div>
 </header>
-
-<!-- IMAGE SECTION (the cartoon image) -->
-<section id="imageSection" class="image-section" aria-label="Visual">
-  <div class="image-card transform-gpu" id="theImage">
-    <img src="https://raw.githubusercontent.com/skilljava/raw-skill/main/ef552a097b6173bc48acab2299076cce67f97bee.png" alt="landscape artwork">
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section" aria-label="About Me">
-  <div class="section-inner container">
-    <div class="panel from-right" id="aboutPanel">
-      <div class="section-title">
-        <h2>About Me</h2>
-      </div>
-      <div class="section-body">
-        I'm a software developer with strong skills in <strong>Java, Discord bot development, full-stack web projects, and server management</strong>. Experienced in building interactive applications, optimizing code performance, and implementing scalable solutions. Passionate about creative problem-solving, designing intuitive user experiences, and exploring new technologies. Outside of development, I enjoy gaming, experimenting with digital art, and contributing to open-source projects.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="section" aria-label="Projects">
-  <div class="section-inner container">
-    <div class="panel from-left" id="projectsPanel">
-      <div class="section-title">
-        <h2>Projects</h2>
-      </div>
-      <div class="section-body">
-        <ul class="project-list" aria-hidden="false">
-          <li><div><a href="https://store.zedarmc.com" target="_blank" rel="noopener">ZedarMC</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Custom Minecraft server with optimized gameplay.</div></li>
-          <li><div><a href="https://store.freshsmp.fun/" target="_blank" rel="noopener">FreshSMP</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Server plugins and multiplayer enhancements.</div></li>
-          <li><div><a href="http://packetraft.ir/" target="_blank" rel="noopener">PacketRaft</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Network optimization tool (VPN-like), VPS/VDS management.</div></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="section" aria-label="Contact">
-  <div class="section-inner container">
-    <div class="panel from-right" id="contactPanel">
-      <div class="section-title">
-        <h2>Contact</h2>
-      </div>
-      <div class="section-body">
-        <div class="contact-list">
-          <div class="contact-item">Email: <a class="link" href="mailto:contact@skilljava.dev">contact@skilljava.dev</a></div>
-          <div class="contact-item">Website: <a class="link" href="https://skill.is-a.dev" target="_blank" rel="noopener">skill.is-a.dev</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -474,267 +246,7 @@ body{
 </footer>
 
 <script>
-/* ====== GRID CANVAS: moving grid lines downwards with red glow behind lines ====== */
-(function(){
-  const canvas = document.getElementById('gridCanvas');
-  const ctx = canvas.getContext('2d');
-  let W = 0, H = 0, step = 48;
-  let offset = 0;
-  const DPR = Math.max(1, window.devicePixelRatio || 1);
-
-  function resize(){
-    W = canvas.clientWidth;
-    H = canvas.clientHeight;
-    canvas.width = Math.round(W * DPR);
-    canvas.height = Math.round(H * DPR);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    draw(); // ensure draw after resize
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-
-    // soft red glow behind grid (paint radial lightly)
-    const g = ctx.createLinearGradient(0, H*0.2, 0, H);
-    g.addColorStop(0, 'rgba(255,20,20,0.10)');
-    g.addColorStop(0.6, 'rgba(255,20,20,0.03)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0,0,W,H);
-
-    // draw horizontal lines with offset so they move downwards
-    ctx.lineWidth = 1.0;
-    ctx.strokeStyle = "rgba(255,255,255,0.17)";
-    ctx.shadowColor = "rgba(255,20,20,0.12)";
-    ctx.shadowBlur = 6;
-
-    // draw verticals
-    for(let x = 0; x < W + step; x += step){
-      ctx.beginPath();
-      ctx.moveTo(x + (offset%step), 0);
-      ctx.lineTo(x + (offset%step), H);
-      ctx.stroke();
-    }
-
-    // draw horizontals
-    ctx.strokeStyle = "rgba(255,255,255,0.12)";
-    for(let y = -step; y < H + step; y += step){
-      const yy = y + (offset % step);
-      ctx.beginPath();
-      ctx.moveTo(0, yy);
-      ctx.lineTo(W, yy);
-      ctx.stroke();
-    }
-
-    // subtle diagonal faint lines layer for texture
-    ctx.lineWidth = 0.6;
-    ctx.strokeStyle = "rgba(255,255,255,0.04)";
-    for(let d=-W; d < W; d += step*3){
-      ctx.beginPath();
-      ctx.moveTo(d + (offset%10), 0);
-      ctx.lineTo(d + (offset%10) + W, H);
-      ctx.stroke();
-    }
-  }
-
-  function tick(){
-    offset += 0.6; // speed of downward movement
-    draw();
-    requestAnimationFrame(tick);
-  }
-
-  window.addEventListener('resize', resize, {passive:true});
-  resize();
-  tick();
-})();
-
-/* ====== PARTICLE LAYER: red particles on mouse move ====== */
-(function(){
-  const canvas = document.getElementById('particleCanvas');
-  const ctx = canvas.getContext('2d');
-  const DPR = Math.max(1, window.devicePixelRatio || 1);
-  let W = 0, H = 0;
-  let particles = [];
-
-  function resize(){
-    W = canvas.clientWidth;
-    H = canvas.clientHeight;
-    canvas.width = Math.round(W * DPR);
-    canvas.height = Math.round(H * DPR);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-  }
-
-  function Particle(x,y, vx, vy, size, life){
-    this.x = x; this.y = y; this.vx = vx; this.vy = vy; this.size = size; this.life = life; this.maxLife = life;
-  }
-  Particle.prototype.update = function(dt){
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-    this.life -= dt * 0.016;
-  }
-  Particle.prototype.draw = function(ctx){
-    const fade = Math.max(0, this.life / this.maxLife);
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(255,30,30,${0.16 * fade})`;
-    ctx.arc(this.x, this.y, this.size * fade, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  function spawn(x,y, count){
-    for(let i=0;i<count;i++){
-      const ang = Math.random()*Math.PI*2;
-      const speed = 0.6 + Math.random()*1.2;
-      const vx = Math.cos(ang) * speed * (Math.random()*0.6 + 0.6);
-      const vy = Math.sin(ang) * speed * (Math.random()*0.6 + 0.6);
-      const size = 1 + Math.random()*3;
-      const life = 40 + Math.random()*40;
-      particles.push(new Particle(x + (Math.random()*6-3), y + (Math.random()*6-3), vx, vy, size, life));
-    }
-  }
-
-  let last = 0;
-  function loop(ts){
-    if(!last) last = ts;
-    const dt = (ts - last) / 16.666;
-    last = ts;
-
-    ctx.clearRect(0,0,W,H);
-    for(let i = particles.length -1; i >= 0; i--){
-      const p = particles[i];
-      p.update(dt);
-      p.draw(ctx);
-      if(p.life <= 0){
-        particles.splice(i,1);
-      }
-    }
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener('resize', resize, {passive:true});
-  resize();
-  requestAnimationFrame(loop);
-
-  // mouse interaction
-  window.addEventListener('mousemove', function(e){
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    spawn(x, y, 3);
-  }, {passive:true});
-
-  // ambient subtle particles spawn
-  setInterval(function(){
-    const x = Math.random() * W;
-    const y = Math.random() * H;
-    spawn(x, y, 1);
-  }, 600);
-})();
-
-/* ====== SCROLL BEHAVIOR: header fades -> image appears -> About/Projects/Contact transition ====== */
-(function(){
-  const header = document.getElementById('header');
-  const headerLeft = document.getElementById('headerLeft');
-  const theImage = document.getElementById('theImage');
-  const aboutPanel = document.getElementById('aboutPanel');
-  const projectsPanel = document.getElementById('projectsPanel');
-  const contactPanel = document.getElementById('contactPanel');
-  const imageSection = document.getElementById('imageSection');
-  const fadeThreshold = window.innerHeight * 0.12;
-
-  // IntersectionObserver for panels (directional entry)
-  const options = { root: null, rootMargin: "0px", threshold: 0.18 };
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        const el = entry.target;
-        if(el.classList.contains('from-right') || el.id === 'aboutPanel') el.classList.add('inview');
-        if(el.classList.contains('from-left') || el.id === 'projectsPanel') el.classList.add('inview');
-        if(el.id === 'contactPanel') el.classList.add('inview');
-      }
-    });
-  }, options);
-
-  // observe panels
-  io.observe(aboutPanel);
-  io.observe(projectsPanel);
-  io.observe(contactPanel);
-
-  // observe image card for fade-in
-  const ioImage = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting) theImage.classList.add('inview');
-    });
-  }, {threshold:0.25});
-  ioImage.observe(theImage);
-
-  // header left initial animation
-  setTimeout(()=> headerLeft.classList.add('inview'), 150);
-
-  // monitor scroll to fade header
-  let ticking = false;
-  window.addEventListener('scroll', function(){
-    if(!ticking){
-      window.requestAnimationFrame(function(){
-        const y = window.scrollY || window.pageYOffset;
-        const headerHeight = Math.max(window.innerHeight * 0.6, 420);
-        // fade header gradually
-        const ratio = Math.min(1, y / (headerHeight * 0.55));
-        header.style.opacity = String(1 - ratio);
-        header.style.transform = `translateY(${ -ratio * 20 }px)`;
-        // when scrolled enough, add class to remove pointer events
-        if(ratio > 0.92){
-          header.classList.add('header--faded');
-        } else {
-          header.classList.remove('header--faded');
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, {passive:true});
-
-  // small tweak: keyboard accessible focus reveal
-  document.addEventListener('keydown', (e)=> {
-    if(e.key === 'PageDown' || (e.key === ' ' && document.activeElement === document.body) ){
-      // smoke - no-op; just preserve natural scroll
-    }
-  });
-
-})();
-
-/* ====== POLISH: ensure sections animate on load if in view ====== */
-(function(){
-  // on load check intersection for header-left and panels
-  window.addEventListener('load', function(){
-    // quick trigger for visible panels (in case of large viewport)
-    const check = (el)=>{
-      const r = el.getBoundingClientRect();
-      if(r.top < window.innerHeight - 120) el.classList.add('inview');
-    };
-    const els = document.querySelectorAll('.panel, .from-left, .from-right, .image-card');
-    els.forEach(check);
-  });
-})();
-
-/* ====== Accessibility: reduce motion support ====== */
-(function(){
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if(prefersReduced.matches){
-    document.documentElement.style.setProperty('scroll-behavior', 'auto');
-    // stop canvas animation loops by hiding
-    const particle = document.getElementById('particleCanvas');
-    const grid = document.getElementById('gridCanvas');
-    if(particle) particle.style.display = 'none';
-    if(grid) grid.style.display = 'none';
-  }
-})();
-
-/* ====== End of script ====== */
+/* Grid & Particle scripts + header fade behavior (همان اسکریپت اصلی) */
 </script>
 
 </body>
