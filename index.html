@@ -1,429 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>@skilljava — Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio - @skilljava</title>
+
 <style>
-/* ====== Reset & Base ====== */
-:root{
-  --bg:#0b0b0b;
-  --red:#ff1a1a;
-  --muted-red: rgba(255,26,26,0.18);
-  --glass-bg: rgba(255,255,255,0.03);
-  --glass-border: rgba(255,255,255,0.06);
-  --text:#ffffff;
-  --accent:#ff4b4b;
-  --green:#21d07a;
-  --grid-white: rgba(255,255,255,0.16);
-  --grid-white-2: rgba(255,255,255,0.08);
-  --max-width: 1200px;
-}
-*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html,body{height:100%}
-body{
-  margin:0;
-  padding:0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.45;
-  overflow-x:hidden;
-  scroll-behavior:smooth;
+/* ====== Global ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* container helpers */
-.container{
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 40px 20px;
+body {
+  background: #0b0b0b;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
 }
 
-/* header */
-.header{
-  position:relative;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
-}
-.header::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(circle at 30% 40%, rgba(255,20,20,0.18) 0%, rgba(0,0,0,0) 40%);
-  filter: blur(34px);
-  z-index:0;
-  pointer-events:none;
-}
-.header::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(180deg, rgba(255,20,20,0.02), rgba(0,0,0,0.12));
-  z-index:1;
-  pointer-events:none;
+/* ====== Animated Grid Background ====== */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,0,0,0.15) 1px, transparent 1px);
+  animation: moveGrid 7s linear infinite;
 }
 
-/* grid canvas wrapper sits behind content */
-.canvas-wrap{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
+@keyframes moveGrid {
+  from { background-position: 0 0; }
+  to { background-position: 40px 40px; }
 }
 
-/* particle wrapper (if used) */
-.particle-wrap{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
+/* ====== Center Profile Card ====== */
+.profile-card {
+  position: relative;
+  width: 330px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 30, 30, 0.12);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  margin: 60px auto 40px auto;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255,0,0,0.2);
 }
 
-/* central layout: profile card centered, menu row to right */
-.h-center {
-  position:relative;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:48px;
-  width:100%;
-  max-width:1100px;
-  padding: 0 20px;
+.profile-card h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
-/* profile card - centered */
-.profile-wrap{
-  min-width:380px;
-  max-width:420px;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  transform: translateY(0);
-}
-.profile-glass{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:18px;
-  border: 1px solid var(--glass-border);
-  padding:20px;
-  backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
-  display:flex;
-  gap:16px;
-  align-items:center;
-  width:100%;
-}
-.avatar{
-  width:96px;
-  height:96px;
-  border-radius:12px;
-  overflow:hidden;
-  flex-shrink:0;
-  border: 3px solid rgba(255,26,26,0.9);
-  box-shadow: 0 8px 30px rgba(255,26,26,0.12), 0 2px 8px rgba(0,0,0,0.6);
-}
-.avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-.meta{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-.meta .name{
-  font-size:1.55rem;
-  font-weight:700;
-  color:var(--text);
-  letter-spacing: -0.02em;
-}
-.meta .subtitle{
-  font-size:0.92rem;
-  color:rgba(255,255,255,0.72);
-}
-.badge{
-  margin-top:6px;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:6px 10px;
-  border-radius:999px;
-  background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.03);
-  color:var(--green);
-  font-weight:700;
-  font-size:0.88rem;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
-}
-.badge .dot{
-  width:10px; height:10px; border-radius:50%; background:var(--green);
-  box-shadow: 0 0 8px rgba(33,208,122,0.6);
-}
-.header-desc{
-  margin-top:18px;
-  color: rgba(255,255,255,0.86);
-  font-size:0.98rem;
-  background:transparent;
-  line-height:1.45;
-  max-width:420px;
+.profile-card p {
+  font-size: 14px;
+  opacity: 0.8;
 }
 
-/* menu squares row (beside profile) */
-.menu-row{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  justify-content:center;
-  flex-wrap:nowrap;
+/* ====== 4 Info Boxes ====== */
+.box-container {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  padding-bottom: 60px;
 }
 
-/* each square */
-.menu-item{
-  --base-w:140px;
-  --base-h:140px;
-  width:var(--base-w);
-  height:var(--base-h);
-  border-radius:14px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
-  border:1px solid rgba(255,255,255,0.03);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:rgba(255,255,255,0.9);
-  font-weight:700;
-  cursor:pointer;
-  user-select:none;
-  transition: transform 300ms cubic-bezier(.2,.9,.2,1), opacity 300ms ease, box-shadow 300ms ease;
-  transform-origin: center;
-  position:relative;
-  overflow:hidden;
-  text-align:center;
-  padding:12px;
+.info-box {
+  width: 230px;
+  height: 180px;
+  border-radius: 18px;
+  background: rgba(255, 20, 20, 0.15);
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  transition: 0.35s;
+  cursor: default;
 }
 
-/* subtle inner glow/red accent */
-.menu-item::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  box-shadow: inset 0 0 28px rgba(255,20,20,0.04);
-  opacity:0.9;
+.info-box h2 {
+  margin-bottom: 10px;
+  color: #ff4444;
+  font-size: 20px;
 }
 
-/* default small scale for non-active when an active exists */
-.menu-row.has-active .menu-item { transform: scale(0.86); opacity:0.72; }
-.menu-row .menu-item.active { transform: scale(1.12); opacity:1; box-shadow: 0 28px 80px rgba(255,10,10,0.06); z-index:12; }
-
-/* focus styles for keyboard */
-.menu-item:focus { outline: 2px solid rgba(255,75,75,0.14); outline-offset: 2px; }
-
-/* label inside */
-.menu-item .label {
-  z-index:2;
-  font-size:0.95rem;
-  pointer-events:none;
+.info-box p {
+  font-size: 14px;
+  opacity: 0.85;
+  line-height: 1.4;
 }
 
-/* small animation when entering */
-.menu-item { transform: translateY(6px) scale(0.98); opacity:0.96; }
-
-/* responsive */
-@media (max-width:980px){
-  .h-center{ flex-direction:column-reverse; gap:28px; padding: 20px; }
-  .menu-row{ order:2; }
-  .profile-wrap{ order:1; align-items:center; text-align:center; }
-  .header-desc{ max-width:320px; }
+/* Hover: one grows, others shrink */
+.box-container:hover .info-box {
+  transform: scale(0.86);
+  opacity: 0.65;
 }
 
-/* footer (kept minimal) */
-.footer{
-  width:100%;
-  padding:26px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:rgba(255,255,255,0.6);
-  font-size:0.95rem;
-  border-top: 1px solid rgba(255,255,255,0.02);
-  background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03));
-  z-index:5;
+.info-box:hover {
+  transform: scale(1.12) !important;
+  opacity: 1 !important;
+  background: rgba(255, 50, 50, 0.25);
 }
 </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header id="header" class="header" aria-label="Header">
-  <div class="canvas-wrap">
-    <canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas>
+<div class="bg-grid"></div>
+
+<!-- Profile Card -->
+<div class="profile-card">
+  <h1>@skilljava</h1>
+  <p>Java Developer • Backend • Example Info</p>
+</div>
+
+<!-- Boxes -->
+<div class="box-container">
+
+  <div class="info-box">
+    <h2>Projects</h2>
+    <p>
+      • Example Project 1<br>
+      • Example Project 2<br>
+      • Example Project 3<br>
+    </p>
   </div>
 
-  <div class="particle-wrap">
-    <canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas>
+  <div class="info-box">
+    <h2>Links</h2>
+    <p>
+      • GitHub: example<br>
+      • Discord: example#0000<br>
+      • Website: example.com
+    </p>
   </div>
 
-  <div class="h-center container" role="main" aria-live="polite">
-    <!-- profile centered -->
-    <div class="profile-wrap" id="profileWrap">
-      <div class="profile-glass" role="region" aria-label="profile">
-        <div class="avatar" aria-hidden="true">
-          <img src="https://cdn.discordapp.com/avatars/1275540868186636348/7383706214a2a719edf30d967c567f9d.png?size=1024" alt="skilljava avatar">
-        </div>
-        <div class="meta">
-          <div class="name">@skilljava</div>
-          <div class="subtitle">Java • Discord bots • Server & network development</div>
-          <div class="badge" aria-hidden="true"><span class="dot"></span><span style="opacity:0.95">Ready to accept orders</span></div>
-        </div>
-      </div>
-
-      <div class="header-desc" id="headerDesc">
-        I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.
-      </div>
-    </div>
-
-    <!-- menu squares row -->
-    <nav class="menu-row" aria-label="Quick links" id="menuRow">
-      <div class="menu-item" data-key="projects" tabindex="0"><div class="label">Projects</div></div>
-      <div class="menu-item" data-key="links" tabindex="0"><div class="label">Links</div></div>
-      <div class="menu-item" data-key="about" tabindex="0"><div class="label">About Me</div></div>
-      <div class="menu-item" data-key="contact" tabindex="0"><div class="label">Contact</div></div>
-    </nav>
+  <div class="info-box">
+    <h2>About Me</h2>
+    <p>
+      Java Developer<br>
+      Backend Specialist<br>
+      Loves building servers & bots
+    </p>
   </div>
-</header>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:10px">
-    <span>Coded by skilljava</span>
+  <div class="info-box">
+    <h2>Contact</h2>
+    <p>
+      Email: example@mail.com<br>
+      Discord: example#0000<br>
+      Response: 1–12h
+    </p>
   </div>
-</footer>
 
-<script>
-/* ====== ANIMATED GRID CANVAS ====== */
-const gridCanvas = document.getElementById("gridCanvas");
-const gc = gridCanvas.getContext("2d");
-function resizeGrid() {
-  gridCanvas.width = window.innerWidth * devicePixelRatio;
-  gridCanvas.height = window.innerHeight * devicePixelRatio;
-  gridCanvas.style.width = window.innerWidth + "px";
-  gridCanvas.style.height = window.innerHeight + "px";
-  gc.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-}
-resizeGrid();
-window.addEventListener("resize", resizeGrid);
-
-let offset = 0;
-function drawGrid() {
-  gc.clearRect(0, 0, gridCanvas.width/devicePixelRatio, gridCanvas.height/devicePixelRatio);
-
-  // soft red glow
-  const W = gridCanvas.width/devicePixelRatio, H = gridCanvas.height/devicePixelRatio;
-  const g = gc.createLinearGradient(0, H*0.15, 0, H);
-  g.addColorStop(0, 'rgba(255,20,20,0.09)');
-  g.addColorStop(0.6, 'rgba(255,20,20,0.02)');
-  g.addColorStop(1, 'rgba(0,0,0,0)');
-  gc.fillStyle = g;
-  gc.fillRect(0,0,W,H);
-
-  gc.lineWidth = 1;
-  gc.strokeStyle = "rgba(255,255,255,0.06)";
-  gc.shadowColor = "rgba(255,20,20,0.06)";
-  gc.shadowBlur = 4;
-
-  const size = 40;
-  offset += 0.18; // speed
-
-  for (let x = -offset; x < W + size; x += size) {
-    gc.beginPath();
-    gc.moveTo((x % size), 0);
-    gc.lineTo((x % size), H);
-    gc.stroke();
-  }
-  gc.strokeStyle = "rgba(255,255,255,0.04)";
-  for (let y = -offset; y < H + size; y += size) {
-    gc.beginPath();
-    gc.moveTo(0, (y % size));
-    gc.lineTo(W, (y % size));
-    gc.stroke();
-  }
-  requestAnimationFrame(drawGrid);
-}
-drawGrid();
-
-/* ====== Menu hover/focus interactions ====== */
-const menuRow = document.getElementById('menuRow');
-const items = Array.from(menuRow.querySelectorAll('.menu-item'));
-
-function clearActive() {
-  items.forEach(it => it.classList.remove('active'));
-  menuRow.classList.remove('has-active');
-}
-function setActive(target) {
-  items.forEach(it => it.classList.remove('active'));
-  target.classList.add('active');
-  menuRow.classList.add('has-active');
-}
-
-// mouse interactions
-items.forEach(it => {
-  it.addEventListener('mouseenter', (e) => {
-    setActive(it);
-  });
-  it.addEventListener('mouseleave', (e) => {
-    // when mouse leaves the whole row, clear; otherwise keep last hovered
-    // small timeout to allow quick hover between items
-    setTimeout(() => {
-      const rect = menuRow.getBoundingClientRect();
-      const x = e.clientX, y = e.clientY;
-      if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
-        clearActive();
-      }
-    }, 60);
-  });
-
-  // keyboard accessibility
-  it.addEventListener('focus', () => setActive(it));
-  it.addEventListener('blur', () => setTimeout(() => {
-    // if no item focused, clear
-    if (!document.activeElement || !menuRow.contains(document.activeElement)) clearActive();
-  }, 40));
-
-  // optional: click handler (for now just a tiny pulse)
-  it.addEventListener('click', () => {
-    // simple visual feedback - pulse
-    it.animate([
-      { transform: getComputedStyle(it).transform },
-      { transform: getComputedStyle(it).transform + ' scale(0.98)' },
-      { transform: getComputedStyle(it).transform }
-    ], { duration: 240, easing: 'ease-out' });
-    // You can wire navigation/scroll here based on data-key
-    const key = it.getAttribute('data-key');
-    console.log('menu clicked:', key);
-  });
-});
-
-/* reduce motion support */
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-if (prefersReduced.matches) {
-  offset = 0;
-}
-
-/* optional particle canvas (kept but disabled - enable if wanted) */
-(function(){
-  const canvas = document.getElementById('particleCanvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  // hide by default for perf - but keep structure if you want particles
-  canvas.style.display = 'none';
-})();
-
-/* helpful: center profile on small screens by adjusting order (handled by CSS above) */
-</script>
+</div>
 
 </body>
 </html>
