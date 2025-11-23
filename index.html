@@ -1,67 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@skilljava | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>@skilljava — Portfolio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-grid"></div>
 
-    <header class="glass">
-        <h1>@skilljava</h1>
-        <p>Java Developer | Clean & Scalable Backend</p>
-        <nav>
-            <ul>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<!-- HEADER -->
+<header id="header" class="header" aria-label="Header">
+  <div class="canvas-wrap">
+    <canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas>
+  </div>
 
-    <section id="projects" class="glass">
-        <h2>Projects</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Project 1</h3>
-                <p>Fast backend API using Spring Boot and PostgreSQL.</p>
-            </div>
-            <div class="card">
-                <h3>Project 2</h3>
-                <p>Microservices architecture with Docker and Kubernetes.</p>
-            </div>
-            <div class="card">
-                <h3>Project 3</h3>
-                <p>Real-time messaging system using WebSocket.</p>
-            </div>
+  <div class="particle-wrap">
+    <canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas>
+  </div>
+
+  <div class="header-inner container">
+    <div class="header-left transform-gpu" id="headerLeft">
+      <div class="profile-glass" role="region" aria-label="profile">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://cdn.discordapp.com/avatars/1275540868186636348/7383706214a2a719edf30d967c567f9d.png?size=1024" alt="skilljava avatar">
         </div>
-    </section>
+        <div class="meta">
+          <div class="name">@skilljava</div>
+          <div class="subtitle">Java • Discord bots • Server & network development</div>
+          <div class="badge" aria-hidden="true"><span class="dot"></span><span style="opacity:0.95">Ready to accept orders</span></div>
+        </div>
+      </div>
 
-    <section id="skills" class="glass">
-        <h2>Skills</h2>
-        <ul class="skills-list">
-            <li>Java</li>
-            <li>Spring Boot</li>
-            <li>Microservices</li>
-            <li>PostgreSQL & MySQL</li>
-            <li>Docker & Kubernetes</li>
+      <div class="header-desc" id="headerDesc">
+        I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="header-deco" aria-hidden="true"> </div>
+    </div>
+  </div>
+</header>
+
+<!-- IMAGE SECTION -->
+<section id="imageSection" class="image-section" aria-label="Visual">
+  <div class="image-card transform-gpu" id="theImage">
+    <img src="https://raw.githubusercontent.com/skilljava/raw-skill/main/ef552a097b6173bc48acab2299076cce67f97bee.png" alt="landscape artwork">
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section" aria-label="About Me">
+  <div class="section-inner container">
+    <div class="panel from-right" id="aboutPanel">
+      <div class="section-title">
+        <h2>About Me</h2>
+      </div>
+      <div class="section-body">
+        I'm a software developer with strong skills in <strong>Java, Discord bot development, full-stack web projects, and server management</strong>. Experienced in building interactive applications, optimizing code performance, and implementing scalable solutions. Passionate about creative problem-solving, designing intuitive user experiences, and exploring new technologies. Outside of development, I enjoy gaming, experimenting with digital art, and contributing to open-source projects.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section" aria-label="Projects">
+  <div class="section-inner container">
+    <div class="panel from-left" id="projectsPanel">
+      <div class="section-title">
+        <h2>Projects</h2>
+      </div>
+      <div class="section-body">
+        <ul class="project-list" aria-hidden="false">
+          <li><div><a href="https://store.zedarmc.com" target="_blank" rel="noopener">ZedarMC</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Custom Minecraft server with optimized gameplay.</div></li>
+          <li><div><a href="https://store.freshsmp.fun/" target="_blank" rel="noopener">FreshSMP</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Server plugins and multiplayer enhancements.</div></li>
+          <li><div><a href="http://packetraft.ir/" target="_blank" rel="noopener">PacketRaft</a></div><div style="opacity:0.86; margin-left:auto; font-size:0.94rem">Network optimization tool (VPN-like), VPS/VDS management.</div></li>
         </ul>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" class="glass">
-        <h2>Contact Me</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </section>
+<!-- CONTACT -->
+<section id="contact" class="section" aria-label="Contact">
+  <div class="section-inner container">
+    <div class="panel from-right" id="contactPanel">
+      <div class="section-title">
+        <h2>Contact</h2>
+      </div>
+      <div class="section-body">
+        <div class="contact-list">
+          <div class="contact-item">Email: <a class="link" href="mailto:contact@skilljava.dev">contact@skilljava.dev</a></div>
+          <div class="contact-item">Website: <a class="link" href="https://skill.is-a.dev" target="_blank" rel="noopener">skill.is-a.dev</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="glass">
-        <p>© 2025 @skilljava | guns.lol</p>
-    </footer>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:10px">
+    <span>Coded by skilljava</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
