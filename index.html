@@ -213,9 +213,11 @@ body{
   <div class="canvas-wrap">
     <canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas>
   </div>
+
   <div class="particle-wrap">
     <canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas>
   </div>
+
   <div class="header-inner container">
     <div class="header-left transform-gpu" id="headerLeft">
       <div class="profile-glass" role="region" aria-label="profile">
@@ -228,12 +230,15 @@ body{
           <div class="badge" aria-hidden="true"><span class="dot"></span><span style="opacity:0.95">Ready to accept orders</span></div>
         </div>
       </div>
+
       <div class="header-desc" id="headerDesc">
         I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.
       </div>
+
     </div>
+
     <div class="header-right">
-      <div class="header-deco" aria-hidden="true"> </div>
+      <div class="header-deco" aria-hidden="true"></div>
     </div>
   </div>
 </header>
@@ -246,7 +251,49 @@ body{
 </footer>
 
 <script>
-/* Grid & Particle scripts + header fade behavior (همان اسکریپت اصلی) */
+/* ====== ANIMATED GRID CANVAS ====== */
+
+const gridCanvas = document.getElementById("gridCanvas");
+const gc = gridCanvas.getContext("2d");
+
+function resizeGrid() {
+  gridCanvas.width = window.innerWidth;
+  gridCanvas.height = window.innerHeight;
+}
+resizeGrid();
+window.addEventListener("resize", resizeGrid);
+
+let offset = 0;
+
+function drawGrid() {
+  gc.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+
+  gc.strokeStyle = "rgba(255,255,255,0.08)";
+  gc.lineWidth = 1;
+
+  const size = 40;
+  offset += 0.15; // سرعت حرکت
+
+  for (let x = -offset; x < gridCanvas.width; x += size) {
+    gc.beginPath();
+    gc.moveTo(x, 0);
+    gc.lineTo(x, gridCanvas.height);
+    gc.stroke();
+  }
+
+  for (let y = -offset; y < gridCanvas.height; y += size) {
+    gc.beginPath();
+    gc.moveTo(0, y);
+    gc.lineTo(gridCanvas.width, y);
+    gc.stroke();
+  }
+
+  requestAnimationFrame(drawGrid);
+}
+
+drawGrid();
+
+/* ====== OPTIONAL: Particle Canvas اگر خواستی فعالش کنم بگو ====== */
 </script>
 
 </body>
