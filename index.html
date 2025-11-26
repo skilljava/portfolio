@@ -6,19 +6,23 @@
 <title>@skilljava</title>
 <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 :root{
-  --bg:#0b0b0b;
-  --red:#ff1a1a;
-  --muted-red: rgba(255,26,26,0.18);
-  --glass-bg: rgba(255,255,255,0.03);
-  --glass-border: rgba(255,255,255,0.06);
-  --text:#ffffff;
-  --accent:#ff4b4b;
-  --green:#21d07a;
-  --grid-white: rgba(255,255,255,0.16);
-  --grid-white-2: rgba(255,255,255,0.08);
-  --max-width: 1100px;
+  --bg:#0b0b0b;
+  --red:#ff1a1a;
+  --muted-red: rgba(255,26,26,0.18);
+  --glass-bg: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.06);
+  --text:#ffffff;
+  --accent:#ff4b4b; 
+  --green:#21d07a; 
+  --yellow:#f9a825; 
+  --red-dnd:#f44336; 
+  --offline:#7f8c8d; 
+  --grid-white: rgba(255,255,255,0.08);
+  --max-width: 1100px;
+  --avatar-size: 96px; 
 }
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{height:100%;margin:0;padding:0;font-family:'Ubuntu',Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text);line-height:1.45;overflow-x:hidden;scroll-behavior:smooth;}
@@ -31,80 +35,322 @@ html,body{height:100%;margin:0;padding:0;font-family:'Ubuntu',Inter,ui-sans-seri
 .particle-wrap{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .header-inner{position:relative;z-index:10;max-width:var(--max-width);margin:0 auto;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px;}
 .profile-glass{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;border:1px solid var(--glass-border);padding:20px;backdrop-filter:blur(10px) saturate(120%);display:flex;gap:16px;align-items:center;}
-.avatar{width:96px;height:96px;border-radius:12px;overflow:hidden;border:3px solid rgba(255,26,26,0.9);flex-shrink:0;}
-.avatar img{width:100%;height:100%;object-fit:cover;}
+
+.avatar{
+    position: relative; 
+    width:var(--avatar-size);
+    height:var(--avatar-size);
+    border-radius:50%; 
+    border:none; 
+    flex-shrink:0;
+} 
+
+.profile-decorator {
+    position: absolute;
+    top: -10px; 
+    left: -10px; 
+    width: calc(var(--avatar-size) + 20px); 
+    height: calc(var(--avatar-size) + 20px); 
+    border-radius: 50%;
+    background: url('angry.png') center / cover; 
+    z-index: 5; 
+    pointer-events: none;
+}
+
+.avatar img{
+    position: relative; 
+    z-index: 4; 
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius: 50%; 
+}
+
+.discord-status-dot{
+  position: absolute; 
+  bottom: 0px; 
+  right: 0px;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%;
+  border: 3px solid var(--bg); 
+  background-color: var(--offline);
+  transition: background-color 0.5s ease;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  z-index: 6; 
+}
+.discord-status-dot i {
+    font-size: 0.7rem; 
+    color: var(--bg); 
+}
+
+#dndStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; 
+    padding: 3px 8px; 
+    border-radius: 6px; 
+    background-color: var(--red-dnd); 
+    color: white;
+    font-size: 0.75rem; 
+    font-weight: 700;
+    margin-left: 10px;
+    line-height: 1.2; 
+    height: 22px; 
+    white-space: nowrap;
+}
+#dndStatusBadge i {
+    font-size: 0.7em; 
+}
+
+
+.spotify-track-info { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 10px; 
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08); 
+}
+.spotify-album-art { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 6px; 
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+}
+.spotify-details { 
+    flex-grow: 1; 
+    min-width: 0; 
+}
+.spotify-title, .spotify-artist {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+.spotify-title { 
+    font-weight: 700; 
+    font-size: 1.0rem; 
+    color: var(--text); 
+    display: block; 
+}
+.spotify-artist { 
+    font-size: 0.8rem; 
+    color: rgba(255,255,255,0.7); 
+    display: block; 
+}
+.spotify-progress-bar { 
+    height: 6px; 
+    background-color: rgba(255,255,255,0.1); 
+    border-radius: 3px; 
+    overflow: hidden; 
+    margin-top: 8px; 
+}
+.spotify-progress-fill { 
+    height: 100%; 
+    background-color: #1DB954; 
+    width: 0%; 
+    transition: width 1s linear; 
+}
+.spotify-timestamps { 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 0.75rem; 
+    color: rgba(255,255,255,0.7); 
+    margin-top: 4px; 
+}
+
+
 .meta{display:flex;flex-direction:column;gap:6px;}
 .meta .name{font-size:1.55rem;font-weight:700;color:var(--text);}
 .meta .subtitle{font-size:0.92rem;color:rgba(255,255,255,0.72);}
-.badge{margin-top:6px;display:inline-flex;align-items:center;gap:10px;padding:6px 10px;border-radius:999px;background: rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.03);color:var(--green);font-weight:700;font-size:0.88rem;}
-.badge .dot{width:10px;height:10px;border-radius:50%;background:var(--green);}
+
+.badge{
+    margin-top:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px; 
+    padding:6px 12px;
+    border-radius:999px;
+    background: rgba(0,0,0,0.22);
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--text); 
+    font-weight:700;
+    font-size:0.88rem;
+    transition: all 0.5s ease;
+}
+.badge .dot {
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--green); 
+    transition: background-color 0.5s ease;
+}
+
 .header-desc{margin-top:18px;color: rgba(255,255,255,0.84);font-size:0.98rem;line-height:1.5;text-align:center;max-width:600px;}
 .info-cards-container {display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
-.info-card {background: rgba(255, 255, 255, 0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter: blur(8px);border-radius:14px;padding:20px 30px;color:white;font-weight:500;font-size:1rem;text-align:left;width:220px;transition: transform 0.3s cubic-bezier(.2,.9,.2,1);}
+.info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border-radius:14px;
+  padding:20px 30px;
+  color:white;
+  font-weight:500;
+  font-size:1rem;
+  text-align:left;
+  width:220px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.4s ease; 
+}
 .info-card h3{margin:0 0 10px 0;font-size:1.2rem;color:var(--accent);}
 .info-card p{margin:0;font-size:0.9rem;line-height:1.4;}
-.info-card:hover{transform: scale(1.2);}
-.info-cards-container.hovered .info-card:not(:hover){transform: scale(0.9);}
+.info-card:hover{
+  transform: translateY(-8px) scale(1.05); 
+  box-shadow: 0 10px 20px rgba(255, 75, 75, 0.15), 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+.info-cards-container.hovered .info-card:not(:hover){transform: scale(0.95); opacity: 0.7;}
+.social-link{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+.social-link:last-child{margin-bottom: 0;}
+.social-link:hover{color: var(--accent);}
+.social-icon{width: 20px; text-align: center; color: var(--accent);}
+.discord-activity-item{
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: rgba(0,0,0,0.1);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.discord-activity-title{font-weight: 700; color: var(--accent); display: block; margin-bottom: 4px;}
+.discord-activity-details{display: block; color: rgba(255,255,255,0.8);}
+
+.skill-list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.skill-item{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.9);
+}
+.skill-name{
+    font-weight: 500;
+}
+.skill-percentage{
+    font-weight: 700;
+    color: var(--accent); 
+}
+
+#mouse-glow {
+    position: absolute; 
+    width: 250px; 
+    height: 250px; 
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(255, 0, 0, 0) 70%); 
+    filter: blur(40px); 
+    border-radius: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+    pointer-events: none; 
+    transition: transform 0.05s linear; 
+}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="canvas-wrap"><canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
-  <div class="particle-wrap"><canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
+  <div id="mouse-glow"></div> <div class="canvas-wrap"><canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
+  <div class="particle-wrap"><canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
 
-  <div class="header-inner container">
-    <div class="profile-glass">
-      <div class="avatar"><img src="https://cdn.discordapp.com/avatars/1275540868186636348/40ba6f6de4001fe4a2dbc3122874f109?size=1024" alt="skilljava avatar"></div>
-      <div class="meta">
-        <div class="name">@skilljava</div>
-        <div class="subtitle">Java • Discord bots • Server & network development</div>
-        <div class="badge"><span class="dot"></span><span>Ready to accept orders</span></div>
-      </div>
-    </div>
-    <div class="header-desc">I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.</div>
+  <div class="header-inner container">
+    <div class="profile-glass">
+      <div class="avatar">
+        <div class="profile-decorator"></div> 
+        <img src="https://cdn.discordapp.com/avatars/1275540868186636348/40ba6f6de4001fe4a2dbc3122874f109.png?size=1024" alt="skilljava avatar">
+        <div id="discordStatusDot" class="discord-status-dot"><i id="statusIcon" class="fas fa-circle-notch"></i></div> 
+      </div>
+      <div class="meta">
+        <div class="name">@skilljava</div>
+        <div class="subtitle">Java • Discord bots • Server & network development</div>
+        <div class="badge">
+            <span class="dot" id="orderStatusDot"></span>
+            <span id="orderStatusText">Ready to accept orders</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-desc">I'm a software developer specialized in <strong>Java</strong>, <strong>Discord bot development</strong>, full-stack web projects and game server management. I build optimized, maintainable systems and enjoy improving performance and player experience.</div>
 
-    <div class="info-cards-container">
-      <div class="info-card">
-        <h3>Projects</h3>
-        <p>
-          <span style="display:block; margin-bottom:8px;"><strong>FreshSMP</strong> – Custom plugins & bot integration</span>
-          <span style="display:block; margin-bottom:8px;"><strong>ZedarMC</strong> – Development of moderation tools & features</span>
-          <span style="display:block;"><strong>Eternull SMP</strong> – Owner & developer, server management & events</span>
-        </p>
-      </div>
-      <div class="info-card">
-        <h3>Links</h3>
-        <p>
-          <span style="display:block; margin-bottom:8px;">GitHub – github.com/skilljava</span>
-          <span style="display:block; margin-bottom:8px;">Portfolio – skilljava.ir</span>
-          <span style="display:block;">Discord Server – join for updates & community</span>
-        </p>
-      </div>
-      <div class="info-card">
-        <h3>About Me</h3>
-        <p>
-          <span style="display:block; margin-bottom:8px;">Java developer with 2+ years experience</span>
-          <span style="display:block; margin-bottom:8px;">Discord bot creator & server admin</span>
-          <span style="display:block;">Passionate about performance optimization & code quality</span>
-        </p>
-      </div>
-      <div class="info-card">
-        <h3>Contact</h3>
-        <p>
-          <span style="display:block; margin-bottom:8px;">Discord DM – @skilljava</span>
-          <span style="display:block; margin-bottom:8px;">Email – skill@go.dev</span>
-          <span style="display:block;">Open to collaborations & freelance projects</span>
-        </p>
-      </div>
-    </div>
-  </div>
+    <div class="info-cards-container">
+      <div class="info-card">
+        <h3>Projects</h3>
+        <p>
+          <span style="display:block; margin-bottom:8px;"><strong>FreshSMP</strong> – Custom plugins & bot integration</span>
+          <span style="display:block; margin-bottom:8px;"><strong>ZedarMC</strong> – Development of moderation tools & features</span>
+          <span style="display:block;"><strong>Eternull SMP</strong> – Owner & developer, server management & events</span>
+        </p>
+      </div>
+      
+      <div class="info-card" id="discordActivityCard">
+        <h3 style="display:flex; justify-content:space-between; align-items:center; color: var(--accent);">
+             Status 
+            <span id="dndStatusBadge"></span>
+        </h3> 
+        <div id="spotifyContent"></div>
+        <div id="discordActivityContent">
+            <p style="text-align:center; opacity:0.7">Loading status...</p>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <h3>Links</h3>
+        <p>
+          <a href="https://github.com/skilljava" class="social-link" target="_blank">
+            <i class="fab fa-github social-icon"></i> <span>GitHub /skilljava</span>
+          </a>
+          <a href="https://skilljava.ir" class="social-link" target="_blank">
+            <i class="fas fa-globe social-icon"></i> <span>Portfolio /skilljava.ir</span>
+          </a>
+          <a href="#" class="social-link" target="_blank">
+            <i class="fab fa-discord social-icon"></i> <span>Discord Server (Join)</span>
+          </a>
+        </p>
+      </div>
+      
+      <div class="info-card">
+        <h3>Skills</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span class="skill-name">Java</span><span class="skill-percentage">95%</span></div>
+          <div class="skill-item"><span class="skill-name">JavaScript</span><span class="skill-percentage">90%</span></div>
+          <div class="skill-item"><span class="skill-name">Node.js</span><span class="skill-percentage">80%</span></div>
+          <div class="skill-item"><span class="skill-name">Discord.js</span><span class="skill-percentage">75%</span></div>
+          <div class="skill-item"><span class="skill-name">HTML/CSS</span><span class="skill-percentage">85%</span></div>
+          <div class="skill-item"><span class="skill-name">MySQL</span><span class="skill-percentage">70%</span></div>
+          <div class="skill-item"><span class="skill-name">Git</span><span class="skill-percentage">55%</span></div>
+          <div class="skill-item"><span class="skill-name">PowerShell</span><span class="skill-percentage">60%</span></div>
+          <div class="skill-item"><span class="skill-name">Python</span><span class="skill-percentage">70%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
 <footer class="footer">
-  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:10px">
-    <span>Coded by skilljava</span>
-  </div>
+  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:10px">
+    <span>Coded by skilljava</span>
+  </div>
 </footer>
 
 <script>
@@ -115,20 +361,240 @@ resizeGrid();
 window.addEventListener("resize",resizeGrid);
 let offset=0;
 function drawGrid(){
-  gc.clearRect(0,0,gridCanvas.width,gridCanvas.height);
-  gc.strokeStyle="rgba(255,255,255,0.08)";
-  gc.lineWidth=1;
-  const size=40; offset+=0.15;
-  for(let x=-offset;x<gridCanvas.width;x+=size){gc.beginPath();gc.moveTo(x,0);gc.lineTo(x,gridCanvas.height);gc.stroke();}
-  for(let y=-offset;y<gridCanvas.height;y+=size){gc.beginPath();gc.moveTo(0,y);gc.lineTo(gridCanvas.width,y);gc.stroke();}
-  requestAnimationFrame(drawGrid);
+  gc.clearRect(0,0,gridCanvas.width,gridCanvas.height);
+  gc.strokeStyle="rgba(255,255,255,0.08)";
+  gc.lineWidth=1;
+  const size=40; offset+=0.15;
+  for(let x=-offset;x<gridCanvas.width;x+=size){gc.beginPath();gc.moveTo(x,0);gc.lineTo(x,gridCanvas.height);gc.stroke();}
+  for(let y=-offset;y<gridCanvas.height;y+=size){gc.beginPath();gc.moveTo(0,y);gc.lineTo(gridCanvas.width,y);gc.stroke();}
+  requestAnimationFrame(drawGrid);
 }
 drawGrid();
 
 const infoContainer=document.querySelector('.info-cards-container');
 infoContainer.addEventListener('mouseenter',()=>{infoContainer.classList.add('hovered');});
 infoContainer.addEventListener('mouseleave',()=>{infoContainer.classList.remove('hovered');});
-</script>
 
-</body>
-</html>
+
+const DISCORD_USER_ID = '1275540868186636348'; 
+
+const statusDot = document.getElementById('discordStatusDot'); 
+const statusIcon = document.getElementById('statusIcon'); 
+const activityContent = document.getElementById('discordActivityContent'); 
+const spotifyContent = document.getElementById('spotifyContent'); 
+const dndStatusBadge = document.getElementById('dndStatusBadge'); 
+const orderStatusDot = document.getElementById('orderStatusDot'); 
+const orderStatusText = document.getElementById('orderStatusText'); 
+
+let spotifyInterval;
+
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+function updateProgressBar(data) {
+    if (!data || !data.spotify || !data.spotify.timestamps) {
+        if (spotifyInterval) clearInterval(spotifyInterval);
+        return;
+    }
+
+    const start = data.spotify.timestamps.start;
+    const end = data.spotify.timestamps.end;
+    const now = Date.now();
+
+    const duration = end - start;
+    let elapsed = now - start;
+    
+    if (elapsed > duration) {
+        elapsed = duration;
+        if (spotifyInterval) clearInterval(spotifyInterval);
+        spotifyInterval = null;
+    }
+
+    const percentage = (elapsed / duration) * 100;
+
+    const progressFill = document.getElementById('spotifyProgressFill');
+    const currentTimeSpan = document.getElementById('spotifyCurrentTime');
+
+    if (progressFill) {
+        progressFill.style.width = `${percentage}%`;
+    }
+    if (currentTimeSpan) {
+        currentTimeSpan.textContent = formatTime(elapsed);
+    }
+}
+
+
+function updateDiscordStatus(data) {
+    if (!data || !data.discord_status) {
+        const color = 'var(--offline)';
+        statusDot.style.backgroundColor = color;
+        statusIcon.className = 'fas fa-circle-notch';
+        orderStatusDot.style.backgroundColor = color;
+        orderStatusText.textContent = 'Status is unavailable';
+        
+        dndStatusBadge.innerHTML = `<i class="fas fa-circle-notch"></i> Offline`; 
+        dndStatusBadge.style.backgroundColor = color;
+        dndStatusBadge.style.color = 'white';
+        
+        activityContent.innerHTML = '<p style="text-align:center; opacity:0.7">Discord status is unavailable or user is offline.</p>';
+        spotifyContent.innerHTML = ''; 
+        if (spotifyInterval) clearInterval(spotifyInterval);
+        spotifyInterval = null;
+        return;
+    }
+    
+    const status = data.discord_status; 
+    let color, iconClassDot, iconClassCard, iconText, badgeTextColor;
+
+    switch (status) {
+        case 'online': 
+            color = 'var(--green)'; 
+            iconClassDot = 'fas fa-circle'; 
+            iconClassCard = 'fas fa-circle'; 
+            iconText = 'Online'; 
+            badgeTextColor = 'white'; 
+            break;
+        case 'idle': 
+            color = 'var(--yellow)'; 
+            iconClassDot = 'fas fa-moon'; 
+            iconClassCard = 'fas fa-moon'; 
+            iconText = 'Idle'; 
+            badgeTextColor = 'white';
+            break;
+        case 'dnd': 
+            color = 'var(--red-dnd)'; 
+            iconClassDot = 'fas fa-minus'; 
+            iconClassCard = 'fas fa-minus'; 
+            iconText = 'DND'; 
+            badgeTextColor = 'white';
+            break;
+        default: 
+            color = 'var(--offline)'; 
+            iconClassDot = 'fas fa-circle-notch'; 
+            iconClassCard = 'fas fa-circle-notch'; 
+            iconText = 'Offline'; 
+            badgeTextColor = 'white';
+            break;
+    }
+
+    statusDot.style.backgroundColor = color; 
+    statusIcon.className = iconClassDot; 
+    orderStatusDot.style.backgroundColor = color; 
+    
+    dndStatusBadge.innerHTML = `<i class="${iconClassCard}"></i> ${iconText}`;
+    dndStatusBadge.style.backgroundColor = color; 
+    dndStatusBadge.style.color = badgeTextColor; 
+    
+    orderStatusText.textContent = (status === 'dnd') ? 'Currently busy/Do Not Disturb' : 'Ready to accept orders';
+
+
+    
+    const isListeningToSpotify = data.spotify;
+    
+    if (spotifyInterval) {
+        clearInterval(spotifyInterval);
+        spotifyInterval = null;
+    }
+    spotifyContent.innerHTML = ''; 
+
+    if (isListeningToSpotify) {
+        const albumArtUrl = isListeningToSpotify.album_art_url;
+        const songName = isListeningToSpotify.song; 
+        const artistName = isListeningToSpotify.artist;
+        const duration = isListeningToSpotify.timestamps.end - isListeningToSpotify.timestamps.start;
+        const durationFormatted = formatTime(duration);
+
+        const spotifyHtml = `
+            <div class="spotify-track-info">
+                <img src="${albumArtUrl}" class="spotify-album-art" alt="Album Art">
+                <div class="spotify-details">
+                    <span class="spotify-title">${songName}</span>
+                    <span class="spotify-artist">${artistName}</span>
+                </div>
+            </div>
+            <div class="spotify-progress-bar">
+                <div id="spotifyProgressFill" class="spotify-progress-fill"></div>
+            </div>
+            <div class="spotify-timestamps">
+                <span id="spotifyCurrentTime">${formatTime(0)}</span>
+                <span>${durationFormatted}</span>
+            </div>
+        `;
+        
+        spotifyContent.innerHTML = spotifyHtml;
+
+        updateProgressBar(data); 
+        spotifyInterval = setInterval(() => updateProgressBar(data), 1000);
+    }
+
+
+    
+    let html = '';
+    const activities = data.activities || [];
+    
+    if (activities.length > 0) {
+        activities.forEach(activity => {
+            let details = activity.details || '';
+            let state = activity.state || '';
+            let name = activity.name || 'Custom Status';
+            let iconColor = 'var(--accent)';
+
+            if (activity.name === 'Spotify') return;
+            
+            if (activity.type === 0) { 
+                name = 'Playing: ' + activity.name;
+                details = activity.details || '';
+                state = activity.state || '';
+                iconColor = 'var(--green)';
+            }
+            
+            if (activity.type !== 4 && activity.name !== 'Custom Status') {
+                html += `
+                    <div class="discord-activity-item" style="border-left-color: ${iconColor};">
+                        <span class="discord-activity-title">${name}</span>
+                        ${details ? `<span class="discord-activity-details">${details}</span>` : ''}
+                        ${state ? `<span class="discord-activity-details">${state}</span>` : ''}
+                    </div>
+                `;
+            }
+        });
+    }
+
+    if (html === '' && !isListeningToSpotify) {
+        html = '<p style="text-align:center; opacity:0.7">No visible activity right now.</p>';
+    } else if (html === '' && isListeningToSpotify) {
+        html = '<p style="text-align:center; opacity:0.7">No other visible activity.</p>'; 
+    }
+    
+    activityContent.innerHTML = html;
+}
+
+function fetchDiscordStatus() {
+    fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                updateDiscordStatus(result.data);
+            } else {
+                updateDiscordStatus(null);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching Lanyard status:", error);
+            updateDiscordStatus(null);
+        });
+}
+
+fetchDiscordStatus();
+setInterval(fetchDiscordStatus, 10000); 
+
+document.addEventListener('mousemove', function(e) {
+    const mouseGlow = document.getElementById('mouse-glow');
+    mouseGlow.style.left = e.clientX + 'px';
+    mouseGlow.style.top = e.clientY + 'px';
+});
+</script>
