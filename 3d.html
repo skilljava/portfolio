@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stunning 3D Object</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
+    <style>
+        /* 📌 استایل‌دهی برای پر کردن فضای iframe */
+        body { margin: 0; overflow: hidden; background-color: #0b0b0b; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script>
+        // متغیرهای اصلی
+        let scene, camera, renderer, sphere, controls, composer;
+        const container = document.body;
+
+        function init() {
+            // 1. صحنه (Scene)
+            scene = new THREE.Scene();
+
+            // 2. دوربین (Camera)
+            const aspectRatio = container.clientWidth / container.clientHeight;
+            camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+            camera.position.z = 2.5;
+
+            // 3. رندرکننده (Renderer)
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // تنظیمات Tone Mapping برای واقعی‌تر کردن روشنایی
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0; 
+
+            // 4. شیء سه‌بعدی (Sphere)
+            const geometry = new THREE.IcosahedronGeometry(1, 1); // یک شکل چند وجهی برای ظاهر پیچیده
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xff4b4b, // رنگ اصلی (همان Accent سایت شما)
+                emissive: 0x440000, // یک نوردهی ضعیف داخلی برای برق‌برقی شدن
+                metalness: 0.95, // متالیک بودن بالا
+                roughness: 0.05, // سطح صاف و براق
+                wireframe: false
+            });
+            sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+
+            // 5. نوردهی (Lighting)
+            // نور محیطی ضعیف
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+            scene.add(ambientLight);
+
+            // نور نقطه‌ای قوی (برای هایلایت‌ها و بازتاب)
+            const pointLight = new THREE.PointLight(0xff0000, 2, 50); // نور قرمز-قوی
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            const pointLight2 = new THREE.PointLight(0x44aaff, 1, 50); // نور آبی-سرد
+            pointLight2.position.set(-5, -5, -5);
+            scene.add(pointLight2);
+            
+            // 6. کنترل‌ها (Controls)
+            // اجازه چرخش شیء با ماوس توسط کاربر
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; // حرکت نرم‌تر
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true; // چرخش خودکار
+            controls.autoRotateSpeed = 1.0;
+            controls.minDistance = 1.5;
+            controls.maxDistance = 5;
+
+            // 7. افکت درخشش (Unreal Bloom Post-Processing)
+            composer = new THREE.EffectComposer(renderer);
+            composer.addPass(new THREE.RenderPass(scene, camera));
+
+            const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 
+                                                        1.5, // قدرت (Strength)
+                                                        0.0, // شعاع (Radius)
+                                                        0.8); // آستانه (Threshold) - کنترل می‌کند چه نوری برق‌برقی شود (پایین‌تر = برق‌برقی‌تر)
+            composer.addPass(bloomPass);
+
+            // 8. شنونده برای تغییر اندازه پنجره
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            composer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // چرخش دستی شیء (علاوه بر autoRotate کنترل‌ها)
+            sphere.rotation.x += 0.000;
+            sphere.rotation.y += 0.003;
+
+            controls.update(); // به‌روزرسانی کنترل‌های چرخش ماوس
+            
+            // رندر با Composer برای افکت درخشش
+            composer.render();
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
