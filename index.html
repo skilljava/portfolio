@@ -25,6 +25,7 @@
   --avatar-size: 96px;
 }
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+/* حذف استایل‌های opacity برای انیمیشن ورود */
 html,body{
     height:100%;
     margin:0;
@@ -35,11 +36,6 @@ html,body{
     line-height:1.45;
     overflow-x:hidden;
     scroll-behavior:smooth;
-    opacity: 0;
-    transition: opacity 0.8s ease-out;
-}
-html.loaded, body.loaded {
-    opacity: 1;
 }
 
 .container{max-width:var(--max-width);margin:0 auto;padding:40px 20px;}
@@ -284,32 +280,10 @@ html.loaded, body.loaded {
     transition: transform 0.05s linear;
 }
 
-.page-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg);
-    z-index: 9999;
-    transition: opacity 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: all;
-}
-
-.page-loader.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
+/* لودر صفحه حذف شد */
 </style>
 </head>
-<body class="loaded">
-
-<div id="pageLoader" class="page-loader">
-    <span style="color:var(--accent); font-size:1.5rem; font-weight:700;">@skilljava Loading...</span>
-</div>
+<body>
 
 <header class="header">
   <div id="mouse-glow"></div> <div class="canvas-wrap"><canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
@@ -367,7 +341,6 @@ html.loaded, body.loaded {
             <i class="fab fa-discord social-icon"></i> <span>Discord Server (Join)</span>
           </a>
         </p>
-        
       </div>
       
       <div class="info-card">
@@ -395,62 +368,6 @@ html.loaded, body.loaded {
 </footer>
 
 <script>
-// --- Glitch Title Animation ---
-const originalTitle = "@skilljava";
-const glitchCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234456789!@#$%^&*()_+-=[]{}|;':\",./<>?~`";
-let intervalId = null;
-
-function getRandomGlitchChar() {
-  const randomIndex = Math.floor(Math.random() * glitchCharacters.length);
-  return glitchCharacters[randomIndex];
-}
-
-function getGlitchText(text, glitchCount) {
-  let glitchedText = text.split('');
-  for (let i = 0; i < glitchCount; i++) {
-    const randomIndex = Math.floor(Math.random() * text.length);
-    glitchedText[randomIndex] = getRandomGlitchChar();
-  }
-  return glitchedText.join('');
-}
-
-function startGlitchAnimation() {
-  if (intervalId) {
-    clearInterval(intervalId);
-  }
-  
-  const duration = 2000;
-  const steps = 40;
-  const stepInterval = duration / steps;
-  let currentStep = 0;
-
-  intervalId = setInterval(() => {
-    if (currentStep >= steps) {
-        clearInterval(intervalId);
-        document.title = originalTitle;
-        intervalId = null;
-        return;
-    }
-    
-    const maxGlitchCount = originalTitle.length;
-    const currentGlitchCount = Math.ceil(maxGlitchCount * (1 - (currentStep / steps)));
-    
-    document.title = getGlitchText(originalTitle, currentGlitchCount);
-    currentStep++;
-  }, stepInterval);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    startGlitchAnimation();
-});
-
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !intervalId) {
-       startGlitchAnimation();
-    }
-});
-
-
 // --- Grid & Particle Canvas ---
 const gridCanvas=document.getElementById("gridCanvas");
 const gc=gridCanvas.getContext("2d");
@@ -699,24 +616,6 @@ document.addEventListener('mousemove', function(e) {
     mouseGlow.style.left = e.clientX + 'px';
     mouseGlow.style.top = e.clientY + 'px';
 });
-
-// --- Page Fade-in Animation ---
-window.addEventListener('load', () => {
-    const pageLoader = document.getElementById('pageLoader');
-    const htmlBody = document.querySelector('html');
-
-    setTimeout(() => {
-        pageLoader.classList.add('hidden');
-        
-        htmlBody.classList.add('loaded');
-        
-        setTimeout(() => {
-            pageLoader.remove();
-        }, 500);
-        
-    }, 500);
-});
-
 </script>
 </body>
 </html>
