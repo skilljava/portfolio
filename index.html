@@ -29,7 +29,7 @@
     --text-header-main: #ffffff;
     --text-header-muted: #9ca3af;
     
-    /* متغیر جدید برای ارتفاع هدر ناوبری */
+    /* متغیر ارتفاع نوار ناوبری */
     --nav-height: 70px; 
 }
 
@@ -38,6 +38,7 @@
 /* ---------------------------------------------------------------------------------- */
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{
+    /* تضمین حداقل ارتفاع یک صفحه و رنگ پس‌زمینه اصلی */
     min-height:100vh; 
     margin:0; 
     padding:0;
@@ -54,22 +55,23 @@ a { text-decoration: none; color: inherit; }
 
 
 /* ---------------------------------------------------------------------------------- */
-/* 3. استایل‌های هدر ناوبری (Fixed Header) - **اصلاح شده** */
+/* 3. استایل‌های هدر ناوبری (Fixed Header) */
 /* ---------------------------------------------------------------------------------- */
 .site-header {
     display: flex;
     justify-content: center; 
     align-items: center;
     padding: 15px 40px; 
-    height: var(--nav-height); /* تنظیم ارتفاع ثابت */
+    height: var(--nav-height); 
     
+    /* افکت شیشه‌ای و مرز */
     background: rgba(5, 5, 5, 0.5); 
     backdrop-filter: blur(10px); 
-    
     border-radius: 0 0 15px 15px; 
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
     
-    position: fixed; /* **تغییر کلیدی:** به جای sticky از fixed استفاده شد تا روی محتوا تداخل نکند */
+    /* **فیکس نهایی:** ثابت کردن در بالا برای عدم تداخل با اسکرول */
+    position: fixed; 
     top: 0;
     z-index: 1000;
     width: 100%;
@@ -98,22 +100,24 @@ a { text-decoration: none; color: inherit; }
 
 
 /* ---------------------------------------------------------------------------------- */
-/* 4. استایل‌های بخش اصلی پروفایل (Hero Section) - **اصلاح شده** */
+/* 4. استایل‌های بخش اصلی پروفایل (Hero Section) */
 /* ---------------------------------------------------------------------------------- */
 .header{
     position:relative; 
     width:100%; 
-    min-height:calc(100vh - var(--nav-height)); /* ارتفاع Header را به اندازه صفحه منهای ناوبار تنظیم می‌کند */
+    /* تضمین ارتفاع مناسب */
+    min-height:calc(100vh - var(--nav-height)); 
     height: auto;
     overflow:hidden; 
     display:flex; 
     flex-direction: column; 
     justify-content: center;
     
-    /* **تغییر کلیدی:** اضافه کردن padding-top برای جلوگیری از قرار گرفتن زیر ناوبار ثابت */
+    /* **فیکس نهایی:** اضافه کردن پدینگ بالا برای زیر نرفتن محتوا زیر ناوبار ثابت */
     padding-top: calc(var(--nav-height) + 30px); 
     padding-bottom: 50px; 
     
+    /* گرادینت پس‌زمینه تیره */
     background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
 }
 
@@ -121,7 +125,7 @@ a { text-decoration: none; color: inherit; }
 .header::before{content:"";position:absolute;inset:0;background: radial-gradient(circle at 30% 40%, rgba(255,20,20,0.18) 0%, rgba(0,0,0,0) 40%);filter: blur(34px);z-index:0;pointer-events:none;}
 .header::after{content:"";position:absolute;inset:0;background: linear-gradient(180deg, rgba(255,20,20,0.02), rgba(0,0,0,0.12));z-index:1;pointer-events:none;}
 
-/* Canvas‌ها Fixed باقی می‌مانند */
+/* **Canvas‌ها:** Fixed برای پوشش کامل و عدم اسکرول */
 .canvas-wrap, .particle-wrap{
     position: fixed; 
     inset: 0;
@@ -141,7 +145,7 @@ a { text-decoration: none; color: inherit; }
     gap:20px; padding:20px; width: 100%;
 }
 
-/* --- بقیه استایل‌ها بدون تغییر باقی می‌مانند --- */
+/* --- بقیه استایل‌ها (بدون تغییر) --- */
 
 .profile-glass{
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
