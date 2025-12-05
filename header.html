@@ -1,0 +1,75 @@
+<style>
+    /* این استایل‌ها فقط مخصوص بخش هدر هستند و باید در فایل‌های 
+    index.html
+    و
+    hosting.html
+    در بخش 
+    <head>
+    اضافه شوند تا هدر شما استایل بگیرد.
+    */
+    
+    :root {
+        --bg-dark: #050505; 
+        --primary: #ff9800; 
+        --text-main: #ffffff;
+        --text-muted: #9ca3af;
+        --border: #1f2937;
+    }
+
+    /* --- Header Container Style --- */
+    .site-header {
+        display: flex;
+        /* چون دکمه و لوگو حذف شدند، لینک‌ها در مرکز قرار می‌گیرند */
+        justify-content: center; 
+        align-items: center;
+        padding: 15px 40px; 
+        
+        /* 1. شفافیت و بلور (Frosted Glass Effect) */
+        background: rgba(5, 5, 5, 0.5); /* کمی تیرگی برای دید بهتر متن */
+        backdrop-filter: blur(10px); 
+        
+        /* 2. گوشه‌های گرد (Rounded Corners) */
+        border-radius: 0 0 15px 15px; 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+        
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* --- Navigation Links --- */
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: 0.3s;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+        color: var(--text-main);
+        /* هایلایت ملایم روی هاور با بلور و گوشه گرد */
+        background-color: rgba(255, 255, 255, 0.05); 
+    }
+</style>
+
+<header class="site-header">
+    <nav class="nav-links">
+        <a href="#">تماس با ما</a>
+        <a href="#">بلاگ</a>
+        <a href="#">درباره ما</a>
+        <a href="#">تعرفه‌ها</a>
+        <a href="#">خدمات</a>
+        <a href="hosting.html" class="active">محصولات <i class="fa-solid fa-chevron-down" style="font-size:0.7em"></i></a> 
+        <a href="index.html">صفحه اصلی</a> 
+    </nav>
+</header>
