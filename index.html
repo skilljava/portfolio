@@ -10,102 +10,119 @@
 
 <style>
 /* ---------------------------------------------------------------------------------- */
-/* استایل‌های Header ناوبری (جدید و فیکس شده) */
+/* 1. متغیرهای ریشه (Root Variables) */
 /* ---------------------------------------------------------------------------------- */
-    :root {
-        --primary-header: #ff9800; 
-        --bg-header-dark: #050505; 
-        --text-header-main: #ffffff;
-        --text-header-muted: #9ca3af;
-        
-        /* متغیرهای اصلی سایت */
-        --bg:#0b0b0b;
-        --red:#ff1a1a;
-        --glass-border: rgba(255,255,255,0.06);
-        --text:#ffffff;
-        --accent:#ff4b4b;
-        --green:#21d07a;
-        --yellow:#f9a825;
-        --red-dnd:#f44336;
-        --offline:#7f8c8d;
-        --grid-white: rgba(255,255,255,0.08);
-        --max-width: 1100px;
-        --avatar-size: 96px;
-    }
+:root {
+    /* متغیرهای اصلی سایت */
+    --bg:#0b0b0b;
+    --red:#ff1a1a;
+    --muted-red: rgba(255,26,26,0.18);
+    --glass-bg: rgba(255,255,255,0.03);
+    --glass-border: rgba(255,255,255,0.06);
+    --text:#ffffff;
+    --accent:#ff4b4b;
+    --green:#21d07a;
+    --yellow:#f9a825;
+    --red-dnd:#f44336;
+    --offline:#7f8c8d;
+    --grid-white: rgba(255,255,255,0.08);
+    --max-width: 1100px;
+    --avatar-size: 96px;
     
-    .site-header {
-        display: flex;
-        justify-content: center; 
-        align-items: center;
-        padding: 15px 40px; 
-        
-        /* شفافیت و بلور (Frosted Glass Effect) */
-        background: rgba(5, 5, 5, 0.5); 
-        backdrop-filter: blur(10px); 
-        
-        /* گوشه‌های گرد */
-        border-radius: 0 0 15px 15px; 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-        
-        /* مهم: برای ثابت ماندن در بالای صفحه */
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .nav-links a {
-        color: var(--text-header-muted);
-        text-decoration: none;
-        font-size: 0.95rem;
-        transition: 0.3s;
-        padding: 5px 10px;
-        border-radius: 8px;
-        white-space: nowrap;
-    }
-
-    .nav-links a:hover, .nav-links a.active {
-        color: var(--text-header-main);
-        background-color: rgba(255, 255, 255, 0.05); 
-    }
+    /* متغیرهای هدر ناوبری */
+    --bg-header-dark: #050505; 
+    --text-header-main: #ffffff;
+    --text-header-muted: #9ca3af;
+}
 
 /* ---------------------------------------------------------------------------------- */
-/* استایل‌های اصلی سایت شما (محتوای پروفایل) */
+/* 2. استایل‌های پایه (Base Styles) */
 /* ---------------------------------------------------------------------------------- */
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{
-    height:100%; /* باقی ماندن height: 100% برای جلوگیری از اسکرول غیر ضروری در body */
-    margin:0; padding:0;
-    font-family:'Ubuntu',Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
-    background:var(--bg); color:var(--text);
-    line-height:1.45; overflow-x:hidden; scroll-behavior:smooth;
+    /* تنظیم ارتفاع برای نمایش درست پس‌زمینه */
+    height:100%; 
+    margin:0; 
+    padding:0;
+    font-family:'Ubuntu',Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+    background:var(--bg); /* تضمین رنگ پس‌زمینه تیره */
+    color:var(--text);
+    line-height:1.45; 
+    overflow-x:hidden; 
+    scroll-behavior:smooth;
 }
 
-/* رفع باگ لینک‌های آبی */
 a { text-decoration: none; color: inherit; }
-
 .container{max-width:var(--max-width);margin:0 auto;padding:40px 20px;}
 
-/* رفع باگ ارتفاع: حداقل ارتفاع برای جلوگیری از سفید شدن */
-.header{
-    position:relative; width:100%; 
-    min-height:100vh; /* تغییر مهم: تضمین نمایش در صفحه اول */
-    height: auto;
-    overflow:hidden; display:flex; flex-direction: column; justify-content: center;
-    background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
-    padding-bottom: 50px; /* فاصله از پایین */
+
+/* ---------------------------------------------------------------------------------- */
+/* 3. استایل‌های هدر ناوبری (Fixed Header) */
+/* ---------------------------------------------------------------------------------- */
+.site-header {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding: 15px 40px; 
+    
+    /* افکت شیشه‌ای یخ‌زده */
+    background: rgba(5, 5, 5, 0.5); 
+    backdrop-filter: blur(10px); 
+    
+    border-radius: 0 0 15px 15px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    
+    /* ثابت ماندن در بالا */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
-/* افکت‌ها (بدون تغییر) */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-header-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    padding: 5px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-header-main);
+    background-color: rgba(255, 255, 255, 0.05); 
+}
+
+
+/* ---------------------------------------------------------------------------------- */
+/* 4. استایل‌های بخش اصلی پروفایل (Hero Section) */
+/* ---------------------------------------------------------------------------------- */
+.header{
+    position:relative; 
+    width:100%; 
+    min-height:100vh; /* تضمین ارتفاع */
+    height: auto;
+    overflow:hidden; 
+    display:flex; 
+    flex-direction: column; 
+    justify-content: center;
+    /* تضمین پس‌زمینه تیره با گرادینت قرمز */
+    background: linear-gradient(180deg, rgba(20,8,8,0.76) 0%, rgba(12,6,6,0.88) 60%), linear-gradient(180deg, rgba(16,2,2,0.25), rgba(8,0,0,0.0));
+    padding-bottom: 50px; 
+    padding-top: 50px; /* فضای بالا برای جلوگیری از چسبیدن به هدر ناوبری */
+}
+
+/* افکت‌های پس‌زمینه: **این بخش برای نمایش پس‌زمینه تیره حیاتی است** */
 .header::before{content:"";position:absolute;inset:0;background: radial-gradient(circle at 30% 40%, rgba(255,20,20,0.18) 0%, rgba(0,0,0,0) 40%);filter: blur(34px);z-index:0;pointer-events:none;}
 .header::after{content:"";position:absolute;inset:0;background: linear-gradient(180deg, rgba(255,20,20,0.02), rgba(0,0,0,0.12));z-index:1;pointer-events:none;}
+
 .canvas-wrap{position:absolute;inset:0;z-index:2;pointer-events:none;}
 .particle-wrap{position:absolute;inset:0;z-index:3;pointer-events:none;}
 
@@ -122,12 +139,20 @@ a { text-decoration: none; color: inherit; }
     max-width: 100%;
 }
 
-/* --- آواتار و وضعیت --- */
+/* آواتار */
 .avatar{
     position: relative; 
     width:var(--avatar-size); height:var(--avatar-size);
     border-radius:50%; border:none; flex-shrink:0;
 } 
+.profile-decorator {
+    position: absolute; top: -10px; left: -10px;
+    width: calc(var(--avatar-size) + 20px); height: calc(var(--avatar-size) + 20px);
+    border-radius: 50%;
+    /* اطمینان از وجود این فایل عکس */
+    background: url('angry.png') center / cover; 
+    z-index: 5; pointer-events: none;
+}
 .avatar img{
     position: relative; z-index: 4;
     width:100%; height:100%; object-fit:cover; border-radius: 50%; 
@@ -140,7 +165,7 @@ a { text-decoration: none; color: inherit; }
   display: flex; align-items: center; justify-content: center; z-index: 6; 
 }
 
-/* --- متن‌ها و کارت‌ها (بدون تغییر) --- */
+/* متن‌ها و کارت‌ها */
 .meta{display:flex;flex-direction:column;gap:6px;}
 .meta .name{font-size:1.55rem;font-weight:700;color:var(--text);}
 .meta .subtitle{font-size:0.92rem;color:rgba(255,255,255,0.72);}
@@ -175,6 +200,15 @@ a { text-decoration: none; color: inherit; }
 }
 .info-card:hover{ transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 75, 75, 0.15); }
 
+/* لینک‌های شبکه‌های اجتماعی */
+.social-link{
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: rgba(255,255,255,0.9);
+  margin-bottom: 10px; font-size: 0.95rem; transition: color 0.3s ease;
+}
+.social-link:hover{color: var(--accent);}
+.social-icon{width: 20px; text-align: center; color: var(--accent);}
+
 /* --- Spotify Progress Bar و وضعیت دیسکورد --- */
 #dndStatusBadge {
     display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px;
@@ -205,7 +239,7 @@ a { text-decoration: none; color: inherit; }
 .spotify-artist { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 
-/* --- Responsive Media Query (برای گوشی) --- */
+/* --- Responsive Media Query --- */
 @media (max-width: 768px) {
     .container { padding: 20px 15px; }
     .site-header { padding: 10px 15px; }
@@ -222,6 +256,7 @@ a { text-decoration: none; color: inherit; }
     .info-card {
         width: 100%; max-width: 100%;
     }
+    /* پنهان کردن افکت ماوس در موبایل */
     #mouse-glow { display: none !important; }
 }
 </style>
@@ -239,9 +274,10 @@ a { text-decoration: none; color: inherit; }
         <a href="index.html" class="active">صفحه اصلی</a> 
     </nav>
 </header>
+
 <header class="header">
   <div id="mouse-glow"></div>
-  <div class="canvas-wrap"><canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
+    <div class="canvas-wrap"><canvas id="gridCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
   <div class="particle-wrap"><canvas id="particleCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
 
   <div class="header-inner container">
@@ -315,6 +351,7 @@ a { text-decoration: none; color: inherit; }
     </div>
   </div>
 </header>
+
 <footer class="footer">
   <div class="container" style="display:flex;align-items:center;justify-content:center;gap:10px; color: #777;">
     <span>Coded by skilljava</span>
@@ -324,7 +361,7 @@ a { text-decoration: none; color: inherit; }
 <script>
 // --- Grid & Particle Canvas ---
 const gridCanvas=document.getElementById("gridCanvas");
-// بررسی وجود المنت قبل از استفاده
+// فقط در صورت وجود المنت‌ها، عملیات را انجام بده
 if (gridCanvas) {
     const gc=gridCanvas.getContext("2d");
     function resizeGrid(){gridCanvas.width=window.innerWidth;gridCanvas.height=window.innerHeight;}
@@ -336,7 +373,7 @@ if (gridCanvas) {
         gc.strokeStyle="rgba(255,255,255,0.08)";
         gc.lineWidth=1;
         const size=40; offset+=0.15;
-        if(offset>size) offset=0; // جلوگیری از عدد خیلی بزرگ
+        if(offset>size) offset=0; 
         for(let x=-offset;x<gridCanvas.width;x+=size){gc.beginPath();gc.moveTo(x,0);gc.lineTo(x,gridCanvas.height);gc.stroke();}
         for(let y=-offset;y<gridCanvas.height;y+=size){gc.beginPath();gc.moveTo(0,y);gc.lineTo(gridCanvas.width,y);gc.stroke();}
         requestAnimationFrame(drawGrid);
@@ -353,7 +390,7 @@ if (infoContainer) {
 }
 
 
-// --- Discord Lanyard Integration ---
+// --- Discord Lanyard Integration (بدون تغییر در منطق، فقط افزودن چک‌های خطا) ---
 const DISCORD_USER_ID = '1275540868186636348'; 
 
 const statusDot = document.getElementById('discordStatusDot'); 
@@ -407,10 +444,8 @@ function updateProgressBar(data) {
 
 
 function updateDiscordStatus(data) {
-    // افزودن بررسی وجود المنت‌ها قبل از تغییر استایل (برای جلوگیری از خطای جاوا اسکریپت)
     if (!statusDot || !statusIcon || !dndStatusBadge || !orderStatusDot || !orderStatusText || !activityContent) return;
 
-    // 1. به‌روزرسانی وضعیت کلی و دکور
     if (!data || !data.discord_status) {
         const color = 'var(--offline)';
         statusDot.style.backgroundColor = color;
@@ -418,7 +453,6 @@ function updateDiscordStatus(data) {
         orderStatusDot.style.backgroundColor = color;
         orderStatusText.textContent = 'Status is unavailable';
         
-        // حالت پیش فرض دکمه وضعیت
         dndStatusBadge.innerHTML = `<i class="fas fa-circle-notch"></i> Offline`; 
         dndStatusBadge.style.backgroundColor = color;
         dndStatusBadge.style.color = 'white';
@@ -475,8 +509,6 @@ function updateDiscordStatus(data) {
     orderStatusText.textContent = (status === 'dnd') ? 'Currently busy/Do Not Disturb' : 'Ready to accept orders';
 
 
-    // 2. به‌روزرسانی کارت فعالیت‌ها (شامل اسپاتیفای)
-    
     // --- مدیریت اسپاتیفای ---
     const isListeningToSpotify = data.spotify;
     
@@ -564,7 +596,6 @@ function updateDiscordStatus(data) {
 }
 
 function fetchDiscordStatus() {
-    // بررسی وجود المنت‌ها قبل از درخواست
     if (!statusDot) return;
     
     fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`)
