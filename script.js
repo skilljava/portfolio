@@ -1,15 +1,29 @@
 // ====================================================================
 // PURE JS ANIMATION ENGINE (GSAP-STYLE)
-// AUTHOR: SKILLJAVA
+// AUTHOR: SKILLJAVA - MODIFIED FOR SKILL BARS
 // ====================================================================
 
 // --- 0. CONFIG & ASSETS ---
 const CONFIG = {
-    logos: [
-        'java.svg', 'javascript.svg', 'react.svg', 'html5.svg', 
-        'css3.svg', 'docker.svg', 'git.svg', 'node.svg', 
-        'python.svg', 'spring.svg', 'postgresql.svg', 'redis.svg'
-    ]
+    // Each skill object includes the name, logo file name, and the proficiency level (in percent)
+    skills: [
+        { name: 'Java', logo: 'java.svg', level: 90 },
+        { name: 'JavaScript', logo: 'javascript.svg', level: 95 },
+        { name: 'React', logo: 'react.svg', level: 85 },
+        { name: 'HTML5', logo: 'html5.svg', level: 100 },
+        { name: 'CSS3', logo: 'css3.svg', level: 90 },
+        { name: 'Docker', logo: 'docker.svg', level: 75 },
+        { name: 'Git', logo: 'git.svg', level: 80 },
+        { name: 'Node.js', logo: 'node.svg', level: 70 },
+        { name: 'Python', logo: 'python.svg', level: 50 },
+        { name: 'Spring', logo: 'spring.svg', level: 85 },
+        { name: 'PostgreSQL', logo: 'postgresql.svg', level: 75 },
+        { name: 'Redis', logo: 'redis.svg', level: 65 }
+    ],
+    // Getter to quickly access only the logo filenames for marquees
+    get logos() {
+        return this.skills.map(s => s.logo);
+    }
 };
 
 // Fallback SVG if asset missing
@@ -18,7 +32,7 @@ function getPlaceholderSVG(color) {
     return `data:image/svg+xml;base64,${btoa(svg)}`;
 }
 
-// --- 1. ANIMATION ENGINE ---
+// --- 1. ANIMATION ENGINE (Unchanged for brevity) ---
 class AnimEngine {
     constructor() {
         this.activeTweens = [];
@@ -151,18 +165,14 @@ class AnimEngine {
 
 const anim = new AnimEngine();
 
-// --- 2. INITIALIZATION ---
+// --- 2. INITIALIZATION (Updated) ---
 
-// Populate Marquees & Skills
+// Populate Marquees & Skills, and create Skill Bars (NEW)
 function initDynamicContent() {
     const topMarquee = document.getElementById('marquee-top');
     const botMarquee = document.getElementById('marquee-bottom');
     const skillsContainer = document.getElementById('skills-container');
-
-    if (!topMarquee || !botMarquee || !skillsContainer) return;
-
-    // Duplicate list for infinite scroll illusion
-    const marqueeList = [...CONFIG.logos, ...CONFIG.logos, ...CONFIG.logos];
+    const skillBarsContainer = document.getElementById('skill-bars-container'); // NEW Skill Bars Grid
 
     // Helper to create image
     const createLogo = (name, className) => {
@@ -170,23 +180,54 @@ function initDynamicContent() {
         img.src = `assets/lang/${name}`;
         img.onerror = () => { img.src = getPlaceholderSVG('#00ff41'); };
         img.className = className;
-        img.alt = 'Tech Logo';
+        img.alt = name.split('.')[0] + ' Logo'; // Better alt text
         return img;
     };
 
-    // Fill Marquees
-    marqueeList.forEach(logo => {
-        topMarquee.appendChild(createLogo(logo, 'marquee-logo'));
-        botMarquee.appendChild(createLogo(logo, 'marquee-logo'));
-    });
+    // 1. Fill Marquees
+    if (topMarquee && botMarquee) {
+        const marqueeLogos = CONFIG.logos; 
+        // Duplicate list for infinite scroll illusion (using logo filenames)
+        const marqueeList = [...marqueeLogos, ...marqueeLogos, ...marqueeLogos]; 
+        marqueeList.forEach(logo => {
+            topMarquee.appendChild(createLogo(logo, 'marquee-logo'));
+            botMarquee.appendChild(createLogo(logo, 'marquee-logo'));
+        });
+    }
 
-    // Fill Skills Cloud
-    CONFIG.logos.forEach(logo => {
-        const bubble = document.createElement('div');
-        bubble.className = 'skill-bubble';
-        bubble.appendChild(createLogo(logo, ''));
-        skillsContainer.appendChild(bubble);
-    });
+    // 2. Fill Skills Cloud (Original orbit section)
+    if (skillsContainer) {
+        CONFIG.skills.forEach(skill => {
+            const bubble = document.createElement('div');
+            bubble.className = 'skill-bubble';
+            bubble.appendChild(createLogo(skill.logo, ''));
+            skillsContainer.appendChild(bubble);
+        });
+    }
+
+    // 3. Fill NEW Skill Bars Grid
+    if (skillBarsContainer) {
+        CONFIG.skills.forEach(skill => {
+            const skillItem = document.createElement('div');
+            // Using glass-card to match theme
+            skillItem.className = 'skill-bar-item glass-card'; 
+
+            // Set inline variable to control CSS animation target width
+            skillItem.innerHTML = `
+                <div class="skill-header">
+                    <div class="skill-logo-name">
+                        ${createLogo(skill.logo, '').outerHTML}
+                        <span>${skill.name}</span>
+                    </div>
+                    <span class="skill-percent">${skill.level}%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-fill" style="--skill-level: ${skill.level}%;"></div>
+                </div>
+            `;
+            skillBarsContainer.appendChild(skillItem);
+        });
+    }
 }
 
 // Background Particles
@@ -335,7 +376,7 @@ function initToggle() {
     };
 }
 
-// --- 3. MAIN SEQUENCE ---
+// --- 3. MAIN SEQUENCE (Updated) ---
 
 window.addEventListener('load', () => {
     
@@ -405,6 +446,22 @@ window.addEventListener('load', () => {
         },
         once: true
     });
+
+    // NEW: Skill Bars Animation Trigger
+    anim.scrollTrigger('.skill-bar-item', {
+        onEnter: (el) => {
+            // Find the progress fill element inside the skill item
+            const fill = el.querySelector('.progress-fill');
+            if (fill) {
+                // Add the class to trigger the CSS animation (the @keyframes fill-bar)
+                fill.classList.add('in-view'); 
+            }
+        },
+        // Start animation when 50% of the element is in view
+        threshold: 0.5, 
+        once: true
+    });
+
 
 });
 
